@@ -1,1 +1,41 @@
 
+name: Orchesterkalender aktualisieren
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  aktualisieren:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Oeffentlichen Kalender laden
+        run: |
+          python3 - <<'PY'
+          import urllib.request, pathlib
+          url='https://calendar.google.com/calendar/ical/ov.erzphil%40gmail.com/public/basic.ics'
+          req=urllib.request.Request(url,headers={'User-Agent':'MeinOrchester-Kalendersynchronisation/1.0'})
+          with urllib.request.urlopen(req,timeout=35) as response:
+              data=response.read()
+          if not data.lstrip().startswith(b'BEGIN:VCALENDAR') or b'BEGIN:VEVENT' not in data:
+              raise RuntimeError('Ungueltige oder leere Kalenderdatei; bisherige Datei bleibt erhalten.')
+          pathlib.Path('calendar.ics').write_bytes(data)
+          print(f'{len(data)} Bytes Kalenderdaten gespeichert')
+          PY
+
+      - name: Aenderungen veroeffentlichen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add calendar.ics
+          if ! git diff --cached --quiet; then
+            git commit -m "Kalender automatisch aktualisieren"
+            git push
+          fi
+
