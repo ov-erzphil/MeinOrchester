@@ -15,7 +15,7 @@ jobs:
           python-version: '3.12'
       - name: Katalog erstellen
         env:
-          DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+                DRIVE_API_KEY: ${{ secrets.GOOGLE_DRIVE_API_KEY }}
         run: python noten-sync.py
       - name: Katalog aktualisieren
         run: |
