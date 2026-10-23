@@ -27,8 +27,10 @@ detail=function(){
    if(/Navigation zum Dienstort|Google Maps/i.test(a.textContent||''))a.closest('p')?.remove();
  });
  const place=String(e.location||'').trim();
- const destination=(localStorage.getItem('mo_return_destination')||'').trim();
- const outward=place?'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(place)+'&travelmode=driving':'';
+ const home=(localStorage.getItem('mo_home_address')||localStorage.getItem('mo_return_destination')||'').trim();
+ const alternate=(localStorage.getItem('mo_alternate_return_destination')||'').trim();
+ const destination=alternate||home;
+ const outward=place?'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(place)+(home?'&origin='+encodeURIComponent(home):'')+'&travelmode=driving':'';
  const back=place&&destination?'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(place)+'&destination='+encodeURIComponent(destination)+'&travelmode=driving':'';
  const nav=document.createElement('div');nav.className='mo-nav-actions';
  const heading=document.createElement('strong');heading.textContent='Navigation';nav.append(heading);
@@ -41,11 +43,15 @@ detail=function(){
  add('🚗 Verkehrslage Rückfahrt',back,'mo-return');
  if(!place){const msg=document.createElement('small');msg.textContent='Kein Dienstort im Kalendereintrag hinterlegt.';nav.append(msg)}
  const settings=document.createElement('details');settings.className='mo-return-settings';
- const summary=document.createElement('summary');summary.textContent='Rückfahrziel festlegen / ändern';
- const input=document.createElement('input');input.placeholder='Straße, Hausnummer, Ort';input.value=destination;
+ const summary=document.createElement('summary');summary.textContent='Alternatives Rückfahrziel';
+ const info=document.createElement('small');info.textContent=home?'Standard: '+home:'Bitte zuerst die Heimatadresse eintragen.';
+ const homeLabel=document.createElement('label');homeLabel.textContent='Heimatadresse (Standard für Hin- und Rückfahrt)';
+ const homeInput=document.createElement('input');homeInput.placeholder='Straße, Hausnummer, Ort';homeInput.value=home;
+ const altLabel=document.createElement('label');altLabel.textContent='Alternatives Rückfahrziel (optional)';
+ const altInput=document.createElement('input');altInput.placeholder='Leer lassen für Heimatadresse';altInput.value=alternate;
  const save=document.createElement('button');save.type='button';save.textContent='Speichern';
- save.addEventListener('click',()=>{localStorage.setItem('mo_return_destination',input.value.trim());detail()});
- settings.append(summary,input,save);nav.append(settings);
+ save.addEventListener('click',()=>{localStorage.setItem('mo_home_address',homeInput.value.trim());localStorage.setItem('mo_alternate_return_destination',altInput.value.trim());detail()});
+ settings.append(summary,info,homeLabel,homeInput,altLabel,altInput,save);nav.append(settings);
  const description=Array.from(el.querySelectorAll('h3')).find(h=>/Beschreibung/i.test(h.textContent||''));
  if(description)description.before(nav);else el.append(nav);
 };
