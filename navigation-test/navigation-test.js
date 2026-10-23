@@ -40,11 +40,15 @@ detail=function(){
   nav.append(a);
  }
  add('↗ Navigieren zum Dienstort',outward,'mo-go');
- add('🚗 Verkehrslage Rückfahrt',back,'mo-return');
+ if(back){add('🚗 Verkehrslage Rückfahrt',back,'mo-return')}else{
+  const btn=document.createElement('button');btn.type='button';btn.className='btn mo-return';btn.textContent='🚗 Verkehrslage Rückfahrt';
+  btn.onclick=()=>{const settings=nav.querySelector('.mo-return-settings');if(settings){settings.open=true;settings.querySelector('input')?.focus()}};
+  nav.append(btn);
+}
  if(!place){const msg=document.createElement('small');msg.textContent='Kein Dienstort im Kalendereintrag hinterlegt.';nav.append(msg)}
  const settings=document.createElement('details');settings.className='mo-return-settings';
- const summary=document.createElement('summary');summary.textContent='Alternatives Rückfahrziel';
- const info=document.createElement('small');info.textContent=home?'Standard: '+home:'Bitte zuerst die Heimatadresse eintragen.';
+ const summary=document.createElement('summary');summary.textContent=home?'Alternatives Rückfahrziel':'Heimatadresse festlegen / alternatives Rückfahrziel';
+ const info=document.createElement('small');info.textContent=home?'Standard: '+home:'Bitte zuerst die Heimatadresse eintragen. Danach funktioniert die Rückfahrt.';
  const homeLabel=document.createElement('label');homeLabel.textContent='Heimatadresse (Standard für Hin- und Rückfahrt)';
  const homeInput=document.createElement('input');homeInput.placeholder='Straße, Hausnummer, Ort';homeInput.value=home;
  const altLabel=document.createElement('label');altLabel.textContent='Alternatives Rückfahrziel (optional)';
