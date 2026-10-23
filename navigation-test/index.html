@@ -9,4 +9,4 @@ document.getElementById('app').addEventListener('load',function(){
  doc.body.append(script);
  }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
 });
-</script></body></html>
+</script><script>document.getElementById('app').addEventListener('load',function(){try{const doc=this.contentDocument; if(doc.getElementById('mo-dayplan-menu'))return;const a=doc.createElement('a');a.id='mo-dayplan-menu';a.href='https://www.erzgebirgische.theater/_pr_intern.cfm';a.target='_blank';a.rel='noopener noreferrer';a.textContent='📄 Tagesplan (PDF)';a.style.cssText='display:inline-flex;align-items:center;gap:6px;padding:9px 12px;margin:6px;border-radius:8px;background:#185b77;color:white;text-decoration:none;font-weight:600';const nav=doc.querySelector('nav')||doc.querySelector('header')||doc.body;nav.append(a)}catch(e){console.error('Tagesplan-Menü:',e)}});</script></body></html>
