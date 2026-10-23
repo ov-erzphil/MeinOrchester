@@ -4,7 +4,7 @@ document.getElementById('app').addEventListener('load',function(){
  const doc=this.contentDocument;
  if(!doc||doc.getElementById('mo-navigation-test'))return;
  const script=doc.createElement('script');
- script.id='mo-navigation-test';script.src=new URL('navigation-test.js?v=4',window.location.href).href;
+ script.id='mo-navigation-test';script.src=new URL('navigation-test.js?v=5',window.location.href).href;
  script.onerror=()=>alert('Navigationstest konnte nicht geladen werden.');
  doc.body.append(script);
  }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
