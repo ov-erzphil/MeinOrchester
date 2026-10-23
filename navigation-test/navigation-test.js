@@ -47,13 +47,14 @@ detail=function(){
 }
  if(!place){const msg=document.createElement('small');msg.textContent='Kein Dienstort im Kalendereintrag hinterlegt.';nav.append(msg)}
  const settings=document.createElement('details');settings.className='mo-return-settings';
- const summary=document.createElement('summary');summary.textContent=home?'Alternatives Rückfahrziel':'Heimatadresse festlegen / alternatives Rückfahrziel';
+ const homePrompt=document.createElement('div');homePrompt.style.fontWeight='600';homePrompt.textContent='Heimatadresse speichern';nav.append(homePrompt);
+ const summary=document.createElement('summary');summary.textContent=home?'Heimatadresse ändern / alternatives Rückfahrziel':'Heimatadresse eingeben und speichern';
  const info=document.createElement('small');info.textContent=home?'Standard: '+home:'Bitte zuerst die Heimatadresse eintragen. Danach funktioniert die Rückfahrt.';
  const homeLabel=document.createElement('label');homeLabel.textContent='Heimatadresse (Standard für Hin- und Rückfahrt)';
  const homeInput=document.createElement('input');homeInput.placeholder='Straße, Hausnummer, Ort';homeInput.value=home;
  const altLabel=document.createElement('label');altLabel.textContent='Alternatives Rückfahrziel (optional)';
  const altInput=document.createElement('input');altInput.placeholder='Leer lassen für Heimatadresse';altInput.value=alternate;
- const save=document.createElement('button');save.type='button';save.textContent='Speichern';
+ const save=document.createElement('button');save.type='button';save.textContent='Heimatadresse speichern';
  save.addEventListener('click',()=>{localStorage.setItem('mo_home_address',homeInput.value.trim());localStorage.setItem('mo_alternate_return_destination',altInput.value.trim());detail()});
  settings.append(summary,info,homeLabel,homeInput,altLabel,altInput,save);nav.append(settings);
  const description=Array.from(el.querySelectorAll('h3')).find(h=>/Beschreibung/i.test(h.textContent||''));
