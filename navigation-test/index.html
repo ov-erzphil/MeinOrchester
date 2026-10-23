@@ -1,0 +1,12 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mein Orchester – Navigationstest</title><style>html,body{margin:0;height:100%;overflow:hidden}iframe{width:100%;height:100%;border:0;display:block}</style></head><body><iframe id="app" title="Mein Orchester – Test" src="../index.html"></iframe><script>
+document.getElementById('app').addEventListener('load',function(){
+ try{
+ const doc=this.contentDocument;
+ if(!doc||doc.getElementById('mo-navigation-test'))return;
+ const script=doc.createElement('script');
+ script.id='mo-navigation-test';script.src='./navigation-test.js?v=3';
+ script.onerror=()=>alert('Navigationstest konnte nicht geladen werden.');
+ doc.body.append(script);
+ }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
+});
+</script></body></html>
