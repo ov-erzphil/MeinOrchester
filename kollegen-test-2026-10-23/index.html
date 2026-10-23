@@ -1,0 +1,15 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mein Orchester – Kollegentest 23.10.2026</title><style>html,body{margin:0;height:100%;overflow:hidden}body{display:flex;flex-direction:column}body>#app{margin-top:0!important}#dayplan{display:none;position:absolute;inset:45px 0 0;background:white;z-index:20;flex-direction:column}#dayplan.open{display:flex}#dayplan iframe{flex:1;width:100%;border:0}#dayplan .bar{padding:8px;display:flex;justify-content:space-between;gap:8px;background:#edf2f5;font:14px system-ui}#dayplan .bar a{color:#185b77}iframe{width:100%;min-height:0;flex:1;border:0;display:block}</style></head><body><div id="dayplan" role="region" aria-label="Aktueller Tagesplan"><div class="bar"><strong>Tagesaktueller Theaterplan (PDF)</strong><span><a id="dayplan-external" target="_blank" rel="noopener noreferrer" href="https://www.erzgebirgische.theater/user/aktuell2.pdf">Extern öffnen</a> &nbsp; <button id="close-dayplan" type="button">Schließen</button></span></div><iframe id="dayplan-frame" title="Tagesplan PDF"></iframe></div><iframe id="app" title="Mein Orchester – Test" src="../index.html"></iframe><script>
+document.getElementById('app').addEventListener('load',function(){
+ try{
+ const doc=this.contentDocument;
+ if(!doc)return;
+
+ const placeMenu=()=>{if(doc.getElementById('mo-theater-menu'))return;const candidates=[...doc.querySelectorAll('button,a,[role=tab]')];const anchor=candidates.find(x=>/^Notenarchiv$/i.test((x.textContent||'').trim()))||candidates.find(x=>/^Dienstplan$/i.test((x.textContent||'').trim()));if(!anchor)return;const tab=doc.createElement('button');tab.id='mo-theater-menu';tab.type='button';tab.textContent=window.innerWidth<400?'Tagesplan':'Tagesplan Theater';tab.className=anchor.className;tab.style.cssText='cursor:pointer;white-space:normal;min-width:0';tab.onclick=()=>openDayplan();anchor.insertAdjacentElement('afterend',tab)};placeMenu();setTimeout(placeMenu,900);setTimeout(placeMenu,2500);const observer=new MutationObserver(()=>{if(!doc.getElementById('mo-theater-menu'))placeMenu()});observer.observe(doc.body,{childList:true,subtree:true});
+ if(doc.getElementById('mo-navigation-test'))return;
+ const script=doc.createElement('script');
+ script.id='mo-navigation-test';script.src=new URL('navigation-test.js?v=20261023',window.location.href).href;
+ script.onerror=()=>alert('Navigationstest konnte nicht geladen werden.');
+ doc.body.append(script);
+ }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
+});
+</script><script>const dayplan=document.getElementById("dayplan");function openDayplan(){const url="https://www.erzgebirgische.theater/user/aktuell2.pdf?t="+Date.now();document.getElementById("dayplan-frame").src=url;document.getElementById("dayplan-external").href=url;dayplan.classList.add("open")};document.getElementById("close-dayplan").onclick=()=>{dayplan.classList.remove("open");document.getElementById("dayplan-frame").removeAttribute("src")};</script></body></html>
