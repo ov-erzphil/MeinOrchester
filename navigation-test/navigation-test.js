@@ -24,7 +24,7 @@ detail=function(){
  if(!e||!el)return;
  // Remove only the old outbound navigation, not unrelated maps links.
  el.querySelectorAll('a').forEach(a=>{
-   if(/Navigation zum Dienstort|Google Maps/i.test(a.textContent||''))a.closest('p')?.remove();
+   if(/Navigation zum Dienstort|Google Maps/i.test(a.textContent||''))a.remove();
  });
  const place=String(e.location||'').trim();
  const home=(localStorage.getItem('mo_home_address')||localStorage.getItem('mo_return_destination')||'').trim();
@@ -42,7 +42,7 @@ detail=function(){
  add('↗ Navigieren zum Dienstort',outward,'mo-go');
  if(back){add('🚗 Verkehrslage Rückfahrt',back,'mo-return')}else{
   const btn=document.createElement('button');btn.type='button';btn.className='btn mo-return';btn.textContent='🚗 Verkehrslage Rückfahrt';
-  btn.onclick=()=>{const settings=nav.querySelector('.mo-return-settings');if(settings){settings.open=true;settings.querySelector('input')?.focus()}};
+  btn.onclick=()=>{const address=window.prompt('Heimatadresse für die Rückfahrt speichern (Straße, Hausnummer, Ort):',home);if(address===null)return;const value=address.trim();if(!value)return;localStorage.setItem('mo_home_address',value);detail();window.open('https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(place)+'&destination='+encodeURIComponent(value)+'&travelmode=driving','_blank','noopener')};
   nav.append(btn);
 }
  if(!place){const msg=document.createElement('small');msg.textContent='Kein Dienstort im Kalendereintrag hinterlegt.';nav.append(msg)}
