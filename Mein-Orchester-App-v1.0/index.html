@@ -20,6 +20,40 @@ document.getElementById('app').addEventListener('load',function(){
  const doc=this.contentDocument;
  if(!doc)return;
 
+
+ // Live Google Drive documents: replace the legacy fixed list when Downloads is opened.
+ const showLiveDocuments=async()=>{
+   let panel=doc.getElementById('mo-documents-live-panel');
+   if(!panel){
+     panel=doc.createElement('section');panel.id='mo-documents-live-panel';
+     panel.style.cssText='position:fixed;inset:0;z-index:2147483000;background:#f8fafc;color:#17324a;overflow:auto;padding:18px;box-sizing:border-box;font:16px system-ui';
+     panel.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2 style="margin:0;font-size:22px">Dokumente · Google Drive</h2><button id="mo-documents-close" type="button" style="padding:9px 14px">Schließen</button></div><p style="font-size:13px">Automatisch aus Google Drive synchronisiert (normalerweise alle 30 Minuten).</p><div id="mo-documents-list" role="status">Dokumente werden geladen …</div><p><a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/drive/folders/1N_G-1mRKps4Yv1x7IsrQqKBEYc2pDWpy">Ordner direkt in Google Drive öffnen</a> · <button id="mo-documents-refresh" type="button">Liste aktualisieren</button></p>';
+     doc.body.appendChild(panel);
+     panel.querySelector('#mo-documents-close').onclick=()=>panel.remove();
+     panel.querySelector('#mo-documents-refresh').onclick=()=>showLiveDocuments();
+   }
+   const list=panel.querySelector('#mo-documents-list');list.textContent='Dokumente werden geladen …';
+   try{
+     const response=await fetch(new URL('../dokumente-katalog.json?t='+Date.now(),location.href),{cache:'no-store'});
+     if(!response.ok)throw Error('HTTP '+response.status);
+     const data=await response.json();list.replaceChildren();
+     if(!Array.isArray(data.files))throw Error('Ungültiger Katalog');
+     if(!data.files.length)list.textContent='Der Ordner enthält derzeit keine PDF-Dateien.';
+     for(const file of data.files){
+       const a=doc.createElement('a');a.href=file.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='📄 '+file.name;
+       a.style.cssText='display:block;padding:13px;margin:7px 0;background:white;border:1px solid #d8e1e8;border-radius:7px;color:#174d78;text-decoration:none';
+       list.appendChild(a);
+     }
+     const time=doc.createElement('small');time.style.cssText='display:block;margin-top:12px;color:#54616d';time.textContent='Letzter Katalogabgleich: '+new Date(data.updatedAt).toLocaleString('de-DE');list.appendChild(time);
+   }catch(error){list.textContent='Die Dokumentenliste konnte nicht geladen werden. Bitte den Google-Drive-Ordner über den Link unten öffnen.';}
+ };
+ doc.addEventListener('click',event=>{
+   const target=event.target.closest?.('button,a,[role=tab]');
+   if(!target||target.id==='mo-documents-close'||target.id==='mo-documents-refresh')return;
+   if(/^(Downloads|Dokumente)$/i.test((target.textContent||'').trim())){
+     event.preventDefault();event.stopImmediatePropagation();showLiveDocuments();
+   }
+ },true);
  const placeMenu=()=>{if(doc.getElementById('mo-theater-menu'))return;const candidates=[...doc.querySelectorAll('button,a,[role=tab]')];const anchor=candidates.find(x=>/^Notenarchiv$/i.test((x.textContent||'').trim()))||candidates.find(x=>/^Dienstplan$/i.test((x.textContent||'').trim()));if(!anchor)return;const tab=doc.createElement('button');tab.id='mo-theater-menu';tab.type='button';tab.textContent='Tagesplan';tab.title='Tagesplan Theater (PDF)';tab.setAttribute('aria-label','Tagesplan Theater (PDF)');tab.className=anchor.className;tab.style.cssText='cursor:pointer;white-space:normal;min-width:0';tab.onclick=()=>openDayplan();anchor.insertAdjacentElement('afterend',tab)};const labels={'Dienstplan':'Dienste','Spielstätten':'Orte','Eilmitteilungen':'Aktuell','Notenarchiv':'Noten','Dokumente':'Downloads'};const shorten=()=>{for(const el of doc.querySelectorAll('button,a,[role=tab]')){if(el.id==='mo-theater-menu')continue;const raw=(el.textContent||'').trim();if(labels[raw]){const node=[...el.childNodes].find(n=>n.nodeType===3&&n.textContent.trim()===raw);if(node)node.textContent=labels[raw];else if(el.children.length===0)el.textContent=labels[raw];el.title=raw;el.setAttribute('aria-label',raw)}}};const ensureLiveDocuments=()=>{if(doc.getElementById('mo-live-documents'))return;const nodes=[...doc.querySelectorAll('button,a,[role=tab]')];const tab=nodes.find(x=>/^(Downloads|Dokumente)$/i.test((x.textContent||'').trim()));if(!tab)return;const link=doc.createElement('a');link.id='mo-live-documents';link.textContent='Dokumente (Google Drive – aktuell)';link.href='https://drive.google.com/drive/folders/1N_G-1mRKps4Yv1x7IsrQqKBEYc2pDWpy?usp=sharing';link.target='_blank';link.rel='noopener noreferrer';link.title='Aktuellen Dokumentenordner öffnen – neue PDFs erscheinen dort automatisch';link.style.cssText='display:inline-block;margin:6px;padding:8px 12px;background:#e7f3ed;color:#16573b;border:1px solid #7fa58c;border-radius:7px;font:600 13px system-ui;text-decoration:none';tab.insertAdjacentElement('afterend',link)};const refresh=()=>{placeMenu();shorten();ensureLiveDocuments()};refresh();setTimeout(refresh,900);setTimeout(refresh,2500);let pending=false;const observer=new MutationObserver(()=>{if(pending)return;pending=true;queueMicrotask(()=>{pending=false;refresh()})});observer.observe(doc.body,{childList:true,subtree:true});
  if(doc.getElementById('mo-navigation-test'))return;
  const script=doc.createElement('script');
