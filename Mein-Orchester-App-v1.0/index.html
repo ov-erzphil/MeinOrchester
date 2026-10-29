@@ -47,7 +47,7 @@ document.getElementById('app').addEventListener('load',function(){
      const time=doc.createElement('small');time.style.cssText='display:block;margin-top:12px;color:#54616d';time.textContent='Letzter Katalogabgleich: '+new Date(data.updatedAt).toLocaleString('de-DE');list.appendChild(time);
    }catch(error){list.textContent='Die Dokumentenliste konnte nicht geladen werden. Bitte den Google-Drive-Ordner über den Link unten öffnen.';}
  };
- const isDownloads=(node)=>{if(!node||node.nodeType!==1)return false;const label=(node.getAttribute('aria-label')||node.getAttribute('title')||node.textContent||'').trim();return /(?:^|\\s)(Downloads|Dokumente)(?:\\s|$)/i.test(label)&&!node.closest('#mo-documents-live-panel')};
+ const isDownloads=(node)=>{if(!node||node.nodeType!==1||node.closest('#mo-documents-live-panel'))return false;const labels=[node.getAttribute('aria-label'),node.getAttribute('title'),node.innerText,node.textContent].filter(Boolean).map(x=>x.trim());return labels.some(x=>/^(Downloads|Dokumente)$/i.test(x)||/^(Downloads|Dokumente)\s*[▼▾⌄]$/i.test(x))};
  const openDownloads=(event)=>{
    const path=event.composedPath?.()||[];
    let target=path.find(el=>el?.nodeType===1&&isDownloads(el)&&el.id!=='mo-documents-close'&&el.id!=='mo-documents-refresh');
