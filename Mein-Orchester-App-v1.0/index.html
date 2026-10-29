@@ -21,6 +21,48 @@ document.getElementById('app').addEventListener('load',function(){
  if(!doc)return;
 
 
+
+ // Notenansicht mit aktuellem Katalog; die bestehende Navigation bleibt unverändert.
+ const showLiveNotes=async()=>{
+   let panel=document.getElementById('mo-notes-live-panel');
+   if(!panel){
+     panel=document.createElement('section');panel.id='mo-notes-live-panel';
+     panel.style.cssText='position:fixed;inset:0;z-index:2147483001;background:#f8fafc;color:#17324a;overflow:auto;padding:16px;box-sizing:border-box;font:15px system-ui';
+     panel.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2 style="margin:0">Notenarchiv</h2><button id="mo-notes-close" type="button" style="padding:9px">Schließen</button></div><label style="display:block;margin:14px 0">Produktion <select id="mo-notes-production" style="display:block;width:100%;padding:10px;font:inherit"></select></label><label style="display:block;margin:10px 0">Suche nach Instrument oder Stück <input id="mo-notes-query" type="search" placeholder="z. B. Horn, Trompete, Nr. 06" style="display:block;width:100%;padding:10px;box-sizing:border-box;font:inherit"></label><p id="mo-notes-count"></p><div id="mo-notes-results">Lade Noten …</div>';
+     document.body.appendChild(panel);
+     panel.querySelector('#mo-notes-close').onclick=()=>panel.remove();
+   }
+   const results=panel.querySelector('#mo-notes-results'),select=panel.querySelector('#mo-notes-production'),query=panel.querySelector('#mo-notes-query');
+   results.textContent='Lade Noten …';
+   try{
+     const res=await fetch(new URL('../noten-katalog.json?t='+Date.now(),location.href),{cache:'no-store'});
+     if(!res.ok)throw Error('HTTP '+res.status);
+     const data=await res.json(),files=data.files||[];
+     const current=select.value;select.replaceChildren();
+     for(const name of ['Alle Produktionen',...new Set(files.map(f=>f.production))].sort((a,b)=>a==='Alle Produktionen'?-1:b==='Alle Produktionen'?1:a.localeCompare(b,'de'))){
+       const option=document.createElement('option');option.value=name;option.textContent=name;select.appendChild(option);
+     }
+     select.value=[...select.options].some(o=>o.value===current)?current:'Alle Produktionen';
+     const render=()=>{
+       const term=query.value.toLocaleLowerCase('de'),production=select.value;
+       const matching=files.filter(f=>(production==='Alle Produktionen'||f.production===production)&&(!term||[f.name,f.work,f.production,...(f.instruments||[])].join(' ').toLocaleLowerCase('de').includes(term)));
+       panel.querySelector('#mo-notes-count').textContent=matching.length+' PDF-Dateien';
+       results.replaceChildren();
+       for(const file of matching.slice(0,600)){
+         const link=document.createElement('a');link.href=file.url;link.target='_blank';link.rel='noopener noreferrer';
+         link.textContent='📄 '+file.name;link.style.cssText='display:block;padding:10px;margin:5px 0;background:#fff;border:1px solid #dce4eb;border-radius:6px;color:#185b77;text-decoration:none';results.appendChild(link);
+       }
+     };
+     select.onchange=render;query.oninput=render;render();
+   }catch(err){results.textContent='Notenkatalog konnte nicht geladen werden: '+err.message;}
+ };
+ const openNotes=event=>{
+   const target=event.target.closest?.('button,a,[role=tab]');
+   if(!target)return;
+   const label=(target.textContent||'').trim();
+   if(label==='Noten'||label==='Notenarchiv'){event.preventDefault();event.stopImmediatePropagation();showLiveNotes()}
+ };
+ doc.addEventListener('click',openNotes,true);
  // Live Google Drive documents: replace the legacy fixed list when Downloads is opened.
  const showLiveDocuments=async()=>{
    let panel=document.getElementById('mo-documents-live-panel');
