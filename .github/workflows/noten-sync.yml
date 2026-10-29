@@ -1,6 +1,9 @@
 name: Notenarchiv synchronisieren
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/noten-sync.yml'
   schedule:
     - cron: '17 */3 * * *'
 permissions:
@@ -10,16 +13,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Katalog erstellen
         env:
-                DRIVE_API_KEY: ${{ secrets.GOOGLE_DRIVE_API_KEY }}
+          DRIVE_API_KEY: ${{ secrets.GOOGLE_DRIVE_API_KEY }}
         run: python noten-sync.py
       - name: Katalog aktualisieren
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add noten-katalog.json
-          git diff --cached --quiet || (git commit -m 'Notenkatalog aktualisieren' && git push)
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'Notenkatalog aktualisieren'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep "$attempt"
+          done
+          echo 'Notenkatalog konnte nach drei Versuchen nicht veroeffentlicht werden.' >&2
+          exit 1
