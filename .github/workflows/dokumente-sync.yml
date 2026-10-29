@@ -1,0 +1,38 @@
+name: Dokumente automatisch synchronisieren
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/dokumente-sync.yml'
+      - 'dokumente-sync.py'
+  schedule:
+    - cron: '11,41 * * * *'
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dokumentenliste aus Google Drive laden
+        env:
+          DRIVE_API_KEY: ${{ secrets.GOOGLE_DRIVE_API_KEY }}
+        run: python dokumente-sync.py
+      - name: Liste veröffentlichen
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dokumente-katalog.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Dokumente aus Google Drive aktualisieren'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep "$attempt"
+          done
+          exit 1
