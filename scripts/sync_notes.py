@@ -39,18 +39,18 @@ def infer(name):
 def normalize_trombones(name, tags):
     """Bass trombone is the third trombone part, even if no number is printed."""
     value=name.lower().replace("_"," ").replace("-"," ")
-    value=re.sub(r"\\.pdf$","",value)
-    trombone=r"(?:posaune|trombone|trombon|pos\\.?)"
+    value=re.sub(r"\.pdf$","",value)
+    trombone=r"(?:posaune|trombone|trombon|pos\.?)"
     if not re.search(trombone,value):
         return tags
     tags=[tag for tag in tags if tag not in ("Posaune 1","Posaune 2","Posaune 3")]
     voices=set()
-    if re.search(r"(?:bass\\s*posaune|bass\\s*trombon(?:e)?|bassposaune)",value):
+    if re.search(r"(?:bass\s*posaune|bass\s*trombon(?:e)?|bassposaune)",value):
         voices.add(3)
-    for m in re.finditer(r"(?:(?<!\\d)([123])\\s*[.]?\\s*"+trombone+r"\\b|"+trombone+r"\\s*[.]?\\s*([123])\\b)",value):
+    for m in re.finditer(r"(?:(?<!\d)([123])\s*[.]?\s*"+trombone+r"\b|"+trombone+r"\s*[.]?\s*([123])\b)",value):
         voices.add(int(m.group(1) or m.group(2)))
     # Combined parts, e.g. Posaune1+2.
-    if re.search(trombone+r"\\s*1\\s*[+&/]\\s*2",value):
+    if re.search(trombone+r"\s*1\s*[+&/]\s*2",value):
         voices.update((1,2))
     if "Posaune" not in tags:
         tags.append("Posaune")
