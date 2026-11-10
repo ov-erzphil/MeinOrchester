@@ -1,0 +1,31 @@
+name: Synchronize Google Drive sheet music
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: notes-sync
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refresh catalog from Google Drive inventory
+        env:
+          NOTES_SOURCE_URL: https://script.google.com/macros/s/AKfycbyabDTHh7apoBKkJLyh-FKIwHhIJhCZMZBQ15ZGj5eSbgAjoeYfiUe4lNVnKkqzu8nQ/exec
+        run: python scripts/sync_notes.py
+      - name: Commit updated catalog if changed
+        run: |
+          if ! git diff --quiet -- noten-katalog.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add noten-katalog.json
+            git commit -m "Auto-sync notes catalog from Google Drive"
+            git push
+          fi
