@@ -36,6 +36,27 @@ instruments={
 def infer(name):
     value=name.lower().replace("_"," ").replace("-"," ")
     return [label for label,pattern in instruments.items() if re.search(pattern,value,re.I)]
+def normalize_trombones(name, tags):
+    """Bass trombone is the third trombone part, even if no number is printed."""
+    value=name.lower().replace("_"," ").replace("-"," ")
+    value=re.sub(r"\\.pdf$","",value)
+    trombone=r"(?:posaune|trombone|trombon|pos\\.?)"
+    if not re.search(trombone,value):
+        return tags
+    tags=[tag for tag in tags if tag not in ("Posaune 1","Posaune 2","Posaune 3")]
+    voices=set()
+    if re.search(r"(?:bass\\s*posaune|bass\\s*trombon(?:e)?|bassposaune)",value):
+        voices.add(3)
+    for m in re.finditer(r"(?:(?<!\\d)([123])\\s*[.]?\\s*"+trombone+r"\\b|"+trombone+r"\\s*[.]?\\s*([123])\\b)",value):
+        voices.add(int(m.group(1) or m.group(2)))
+    # Combined parts, e.g. Posaune1+2.
+    if re.search(trombone+r"\\s*1\\s*[+&/]\\s*2",value):
+        voices.update((1,2))
+    if "Posaune" not in tags:
+        tags.append("Posaune")
+    tags.extend(f"Posaune {n}" for n in sorted(voices))
+    return tags
+
 files=[]
 for item in incoming:
     fid=item.get("id");name=item.get("name","");folder=item.get("folder","")
@@ -48,7 +69,7 @@ for item in incoming:
         "id":fid,"name":name,"path":path,
         "production":path[0] if path else "Sonstiges",
         "work":path[-1] if path else name.rsplit(".",1)[0],
-        "instruments":previous.get("instruments",[]) if unchanged else infer(name),
+        "instruments":normalize_trombones(name, previous.get("instruments",[]) if unchanged else infer(name)),
         "hornVoices":previous.get("hornVoices",[]) if unchanged else [],
         "url":f"https://drive.google.com/file/d/{fid}/view"
     })
