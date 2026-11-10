@@ -42,12 +42,12 @@ document.getElementById('app').addEventListener('load',function(){
      for(const name of ['Alle Produktionen',...new Set(files.map(f=>f.production))].sort((a,b)=>a==='Alle Produktionen'?-1:b==='Alle Produktionen'?1:a.localeCompare(b,'de'))){
        const option=document.createElement('option');option.value=name;option.textContent=name;select.appendChild(option);
      }
-     select.value=[...select.options].some(o=>o.value===current)?current:(files.some(f=>f.production==='Bunbury')?'Bunbury':'Alle Produktionen');
+     select.value=[...select.options].some(o=>o.value===current)?current:'Alle Produktionen';
      const updateInstruments=()=>{
        const current=instrument.value;instrument.replaceChildren();
        const available=[...new Set(files.filter(f=>select.value==='Alle Produktionen'||f.production===select.value).flatMap(f=>f.instruments||[]))].sort((a,b)=>a.localeCompare(b,'de'));
        for(const name of ['Alle Instrumente',...available]){const opt=document.createElement('option');opt.value=name;opt.textContent=name;instrument.appendChild(opt)}
-       instrument.value=available.includes(current)?current:(available.includes('Horn')?'Horn':'Alle Instrumente');
+       instrument.value=available.includes(current)?current:'Alle Instrumente';
      };
      const render=()=>{
        const term=query.value.toLocaleLowerCase('de'),production=select.value,inst=instrument.value;
@@ -62,6 +62,8 @@ document.getElementById('app').addEventListener('load',function(){
      select.onchange=()=>{instrument.value='Alle Instrumente';updateInstruments();render()};instrument.onchange=render;query.oninput=render;updateInstruments();render();
    }catch(err){results.textContent='Notenkatalog konnte nicht geladen werden: '+err.message;}
  };
+ // Refresh the open archive every five minutes without requiring a page reload.
+ setInterval(()=>{if(document.getElementById('mo-notes-live-panel'))showLiveNotes()},300000);
  const openNotes=event=>{
    const target=event.target.closest?.('button,a,[role=tab]');
    if(!target)return;
