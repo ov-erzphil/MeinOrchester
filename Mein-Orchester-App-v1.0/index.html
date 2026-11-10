@@ -56,7 +56,7 @@ document.getElementById('app').addEventListener('load',function(){
        results.replaceChildren();
        for(const file of matching.slice(0,600)){
          const link=document.createElement('a');link.href=file.url;link.target='_blank';link.rel='noopener noreferrer';
-         link.textContent='📄 '+file.name;link.style.cssText='display:block;padding:10px;margin:5px 0;background:#fff;border:1px solid #dce4eb;border-radius:6px;color:#185b77;text-decoration:none';results.appendChild(link);
+         link.textContent='📄 '+file.name+((file.instruments||[]).includes('Posaune 3')&&/bass\s*(?:posaune|trombon)/i.test(file.name)?' (Posaune 3)':'');link.style.cssText='display:block;padding:10px;margin:5px 0;background:#fff;border:1px solid #dce4eb;border-radius:6px;color:#185b77;text-decoration:none';results.appendChild(link);
        }
      };
      select.onchange=()=>{instrument.value='Alle Instrumente';updateInstruments();render()};instrument.onchange=render;query.oninput=render;updateInstruments();render();
