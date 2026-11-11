@@ -91,7 +91,15 @@ document.getElementById('app').addEventListener('load',function(){
   const h=doc.createElement('h2');h.textContent='Spielstätten A–Z';h.style.margin='0';
   const close=doc.createElement('button');close.type='button';close.textContent='Schließen';close.onclick=()=>panel.remove();header.append(h,close);panel.append(header);
   const info=doc.createElement('p');info.textContent='Alphabetisch nach Spielstättenname. Die bisherigen Orte der App bleiben im Hintergrund erhalten.';panel.append(info);
+  let lastLetter='';
   for(const venue of moVenues){
+   const letter=venue.name.trim().charAt(0).toLocaleUpperCase('de');
+   if(letter!==lastLetter){
+    const section=doc.createElement('h3');section.textContent=letter;
+    section.setAttribute('aria-label','Spielstätten mit '+letter);
+    section.style.cssText='font-size:30px;font-weight:800;line-height:1.2;color:#17324a;border-bottom:2px solid #185b77;margin:22px 0 8px;padding:0 0 5px';
+    panel.append(section);lastLetter=letter;
+   }
    const card=doc.createElement('article');card.style.cssText='background:white;border:1px solid #dce4eb;border-radius:8px;padding:12px;margin:10px 0';
    const title=doc.createElement('strong');title.textContent=venue.name;title.style.display='block';
    const address=doc.createElement('div');address.textContent=venue.address;address.style.margin='6px 0';
