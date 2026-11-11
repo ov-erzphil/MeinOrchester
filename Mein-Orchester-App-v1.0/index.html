@@ -164,13 +164,6 @@ document.getElementById('app').addEventListener('load',function(){
  doc.body.append(script);
  }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
 });
-</script><script>
-(function(){
- const btn=document.createElement('button');btn.id='mo-places-az';btn.type='button';btn.textContent='Orte A–Z';btn.title='Alphabetische Ortsübersicht öffnen';
- btn.style.cssText='position:fixed;top:5px;right:8px;z-index:2147483500;padding:7px 12px;background:#185b77;color:white;border:0;border-radius:7px;font:600 14px system-ui;cursor:pointer;box-shadow:0 2px 8px #0003';
- btn.onclick=()=>{if(typeof window.moOpenVenues==='function'){window.moOpenVenues()}else{alert('Ortsübersicht wird geladen. Bitte die App neu laden.')}};
- document.body.append(btn);
-})();
 </script><script>const dayplan=document.getElementById("dayplan");function openDayplan(){const url="https://www.erzgebirgische.theater/user/aktuell1.pdf";window.open(url,"_blank","noopener,noreferrer")};document.getElementById("refresh-dayplan").onclick=()=>openDayplan();document.getElementById("close-dayplan").onclick=()=>{dayplan.classList.remove("open");document.getElementById("dayplan-frame").removeAttribute("src")};</script><script>
 /* Independent venue index, available even if the embedded calendar cannot load. */
 (function(){
@@ -183,9 +176,7 @@ document.getElementById('app').addEventListener('load',function(){
  ['Orchesterprobenraum (OPR)','Wilischstraße 8, 09456 Annaberg-Buchholz, Deutschland','Probebühne'],
  ['Volkshaus Thum','Neumarkt 4, 09419 Thum, Deutschland','']
  ].sort((a,b)=>a[0].localeCompare(b[0],'de'));
- const btn=document.getElementById('mo-places-az');if(!btn)return;
- btn.textContent='Orte A–Z · aktuell';
- btn.onclick=function(){
+ const showCurrentVenues=function(){
   let panel=document.getElementById('mo-venues-current');if(panel){panel.remove();return}
   panel=document.createElement('section');panel.id='mo-venues-current';
   panel.style.cssText='position:fixed;inset:0;z-index:2147483600;background:#f8fafc;color:#17324a;overflow:auto;padding:16px;box-sizing:border-box;font:15px system-ui';
@@ -203,5 +194,20 @@ document.getElementById('app').addEventListener('load',function(){
   }
   document.body.append(panel)
  };
+ window.moOpenCurrentVenues=showCurrentVenues;
+ const frame=document.getElementById('app');
+ function bindVenueTab(){
+  try{const w=frame.contentWindow;if(!w||w.__moCurrentVenuesBound)return;
+   w.__moCurrentVenuesBound=true;
+   w.addEventListener('click',function(ev){
+    const el=ev.target.closest?.('button,a,[role=tab]');if(!el)return;
+    const label=(el.textContent||'').trim();
+    if(label==='Orte'||label==='Spielstätten'){
+     ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation();showCurrentVenues();
+    }
+   },true);
+  }catch(e){console.warn('Orte-Tab konnte nicht verbunden werden',e)}
+ }
+ frame.addEventListener('load',bindVenueTab);bindVenueTab();
 })();
 </script></body></html>
