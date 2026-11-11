@@ -72,31 +72,44 @@ document.getElementById('app').addEventListener('load',function(){
  };
  doc.addEventListener('click',openNotes,true);
 
- // Dauerhafte, einheitliche Spielstaettenangabe: OPR / Probebuehne.
- const showOprVenue=()=>{
-   let panel=doc.getElementById('mo-opr-venue');
-   if(panel){panel.remove();return}
-   panel=doc.createElement('aside');panel.id='mo-opr-venue';
-   panel.setAttribute('aria-label','Spielstaette OPR');
-   panel.style.cssText='position:fixed;top:70px;right:12px;left:12px;max-width:520px;margin-left:auto;z-index:2147482900;background:#fff;color:#17324a;border:2px solid #185b77;border-radius:10px;padding:16px;box-shadow:0 6px 24px #0003;font:15px system-ui';
-   const head=doc.createElement('div');head.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:12px';
-   const title=doc.createElement('strong');title.textContent='OPR – Probebühne';
-   const close=doc.createElement('button');close.type='button';close.textContent='Schließen';close.onclick=()=>panel.remove();
-   head.append(title,close);
-   const address=doc.createElement('p');address.textContent='Wilischstraße 8, 09456 Annaberg-Buchholz, Deutschland';
-   const nav=doc.createElement('a');nav.textContent='↗ Navigation zur Probebühne';nav.href='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent('Wilischstraße 8, 09456 Annaberg-Buchholz, Deutschland');nav.target='_blank';nav.rel='noopener noreferrer';
-   panel.append(head,address,nav);doc.body.append(panel);
+
+ // Alphabetisches Spielstaettenverzeichnis mit festen Navigationsadressen.
+ const moVenues=[
+  {name:'Eduard-von-Winterstein-Theater',detail:'Hauptbühne / Studiobühne',address:'Buchholzer Straße 67, 09456 Annaberg-Buchholz, Deutschland'},
+  {name:'Kulturhaus Aue',detail:'',address:'Goethestraße 2, 08280 Aue-Bad Schlema, Deutschland'},
+  {name:'Nicolaikirche Aue',detail:'',address:'Schwarzenberger Straße 12, 08280 Aue-Bad Schlema, Deutschland'},
+  {name:'OPR – Probebühne',detail:'Orchesterprobenraum',address:'Wilischstraße 8, 09456 Annaberg-Buchholz, Deutschland'},
+  {name:'Probenort Aue – Ernst-Bauch-Straße',detail:'Gebäudebezeichnung noch zu bestätigen',address:'Ernst-Bauch-Straße 15, 08280 Aue-Bad Schlema, Deutschland'},
+  {name:'Volkshaus Thum',detail:'',address:'Neumarkt 4, 09419 Thum, Deutschland'}
+ ].sort((a,b)=>a.name.localeCompare(b.name,'de',{sensitivity:'base'}));
+ const showVenueDirectory=()=>{
+  let panel=doc.getElementById('mo-venue-directory');
+  if(panel){panel.remove();return}
+  panel=doc.createElement('section');panel.id='mo-venue-directory';panel.setAttribute('aria-label','Alphabetische Spielstätten');
+  panel.style.cssText='position:fixed;inset:48px 0 0;z-index:2147482900;background:#f8fafc;color:#17324a;overflow:auto;padding:16px;box-sizing:border-box;font:15px system-ui';
+  const header=doc.createElement('div');header.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:12px';
+  const h=doc.createElement('h2');h.textContent='Spielstätten A–Z';h.style.margin='0';
+  const close=doc.createElement('button');close.type='button';close.textContent='Schließen';close.onclick=()=>panel.remove();header.append(h,close);panel.append(header);
+  const info=doc.createElement('p');info.textContent='Alphabetisch nach Spielstättenname. Die bisherigen Orte der App bleiben im Hintergrund erhalten.';panel.append(info);
+  for(const venue of moVenues){
+   const card=doc.createElement('article');card.style.cssText='background:white;border:1px solid #dce4eb;border-radius:8px;padding:12px;margin:10px 0';
+   const title=doc.createElement('strong');title.textContent=venue.name;title.style.display='block';
+   const address=doc.createElement('div');address.textContent=venue.address;address.style.margin='6px 0';
+   card.append(title,address);
+   if(venue.detail){const detail=doc.createElement('small');detail.textContent=venue.detail;detail.style.cssText='display:block;color:#536674;margin-bottom:7px';card.append(detail)}
+   const nav=doc.createElement('a');nav.textContent='↗ Navigieren';nav.href='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(venue.address);nav.target='_blank';nav.rel='noopener noreferrer';card.append(nav);panel.append(card);
+  }
+  doc.body.append(panel);
  };
  doc.addEventListener('click',event=>{
-   const target=event.target.closest?.('button,a,[role=tab]');
-   if(!target)return;
-   const label=(target.textContent||'').trim();
-   if(label==='Orte'||label==='Spielstätten'){
-     // Die bestehende Spielstaettenliste bleibt erhalten; OPR wird als zusaetzliche Karte gezeigt.
-     setTimeout(()=>{if(!doc.getElementById('mo-opr-venue'))showOprVenue()},60);
-   }else if(['Dienste','Dienstplan','Noten','Notenarchiv','Aktuell','Downloads','Tagesplan'].includes(label)){
-     doc.getElementById('mo-opr-venue')?.remove();
-   }
+  const target=event.target.closest?.('button,a,[role=tab]');
+  if(!target)return;
+  const label=(target.textContent||'').trim();
+  if(label==='Orte'||label==='Spielstätten'){
+   setTimeout(()=>{if(!doc.getElementById('mo-venue-directory'))showVenueDirectory()},60);
+  }else if(['Dienste','Dienstplan','Noten','Notenarchiv','Aktuell','Downloads','Tagesplan'].includes(label)){
+   doc.getElementById('mo-venue-directory')?.remove();
+  }
  },true);
  // Live Google Drive documents: replace the legacy fixed list when Downloads is opened.
  const showLiveDocuments=async()=>{
