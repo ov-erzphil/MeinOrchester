@@ -112,6 +112,15 @@ document.getElementById('app').addEventListener('load',function(){
   doc.body.append(panel);
  };
  window.moOpenVenues=showVenueDirectory;
+ doc.addEventListener('click',event=>{
+  const target=event.target.closest?.('button,a,[role=tab]');if(!target)return;
+  const label=(target.textContent||'').trim();
+  if(label==='Orte'||label==='Spielstätten'){
+    event.preventDefault();event.stopImmediatePropagation();showVenueDirectory();
+  }else if(['Dienste','Dienstplan','Noten','Notenarchiv','Aktuell','Downloads','Tagesplan'].includes(label)){
+    doc.getElementById('mo-venue-directory')?.remove();
+  }
+ },true);
  // Live Google Drive documents: replace the legacy fixed list when Downloads is opened.
  const showLiveDocuments=async()=>{
    let panel=document.getElementById('mo-documents-live-panel');
