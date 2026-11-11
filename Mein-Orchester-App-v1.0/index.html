@@ -52,10 +52,10 @@ document.getElementById('app').addEventListener('load',function(){
      const render=()=>{
        const term=query.value.toLocaleLowerCase('de'),production=select.value,inst=instrument.value;
        const matching=files.filter(f=>(production==='Alle Produktionen'||f.production===production)&&(inst==='Alle Instrumente'||(f.instruments||[]).includes(inst))&&(!term||[f.name,f.work,f.production,...(f.instruments||[])].join(' ').toLocaleLowerCase('de').includes(term)));
-       panel.querySelector('#mo-notes-count').textContent=matching.length+' PDF-Dateien';
+       panel.querySelector('#mo-notes-count').textContent=matching.length+' PDF-Dateien · Katalog: '+(data.generatedAt?new Date(data.generatedAt).toLocaleString('de-DE'):'unbekannt')+' · Links werden beim Öffnen aktualisiert';
        results.replaceChildren();
        for(const file of matching.slice(0,600)){
-         const link=document.createElement('a');link.href=file.url;link.target='_blank';link.rel='noopener noreferrer';
+         const link=document.createElement('a');link.href=file.url+(file.url.includes('?')?'&':'?')+'mo_refresh='+Date.now();link.target='_blank';link.rel='noopener noreferrer';
          link.textContent='📄 '+file.name+((file.instruments||[]).includes('Posaune 3')&&/bass\s*(?:posaune|trombon)/i.test(file.name)?' (Posaune 3)':'');link.style.cssText='display:block;padding:10px;margin:5px 0;background:#fff;border:1px solid #dce4eb;border-radius:6px;color:#185b77;text-decoration:none';results.appendChild(link);
        }
      };
