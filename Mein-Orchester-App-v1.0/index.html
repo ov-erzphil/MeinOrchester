@@ -171,4 +171,37 @@ document.getElementById('app').addEventListener('load',function(){
  btn.onclick=()=>{if(typeof window.moOpenVenues==='function'){window.moOpenVenues()}else{alert('Ortsübersicht wird geladen. Bitte die App neu laden.')}};
  document.body.append(btn);
 })();
-</script><script>const dayplan=document.getElementById("dayplan");function openDayplan(){const url="https://www.erzgebirgische.theater/user/aktuell1.pdf";window.open(url,"_blank","noopener,noreferrer")};document.getElementById("refresh-dayplan").onclick=()=>openDayplan();document.getElementById("close-dayplan").onclick=()=>{dayplan.classList.remove("open");document.getElementById("dayplan-frame").removeAttribute("src")};</script></body></html>
+</script><script>const dayplan=document.getElementById("dayplan");function openDayplan(){const url="https://www.erzgebirgische.theater/user/aktuell1.pdf";window.open(url,"_blank","noopener,noreferrer")};document.getElementById("refresh-dayplan").onclick=()=>openDayplan();document.getElementById("close-dayplan").onclick=()=>{dayplan.classList.remove("open");document.getElementById("dayplan-frame").removeAttribute("src")};</script><script>
+/* Independent venue index, available even if the embedded calendar cannot load. */
+(function(){
+ const venues=[
+ ['Eduard-von-Winterstein-Theater','Buchholzer Straße 67, 09456 Annaberg-Buchholz, Deutschland','Hauptbühne und Studiobühne'],
+ ['Gemeindezentrum Aue','Ernst-Bauch-Straße 15, 08280 Aue-Bad Schlema, Deutschland','Probenort; Gebäudebezeichnung bitte bestätigen'],
+ ['Kulturhaus Aue','Goethestraße 2, 08280 Aue-Bad Schlema, Deutschland',''],
+ ['Kulturhaus AKTIVIST Bad Schlema','','Kleiner Saal; genaue Navigationsadresse noch zu bestätigen'],
+ ['Nicolaikirche Aue','Schwarzenberger Straße 12, 08280 Aue-Bad Schlema, Deutschland',''],
+ ['Orchesterprobenraum (OPR)','Wilischstraße 8, 09456 Annaberg-Buchholz, Deutschland','Probebühne'],
+ ['Volkshaus Thum','Neumarkt 4, 09419 Thum, Deutschland','']
+ ].sort((a,b)=>a[0].localeCompare(b[0],'de'));
+ const btn=document.getElementById('mo-places-az');if(!btn)return;
+ btn.textContent='Orte A–Z · aktuell';
+ btn.onclick=function(){
+  let panel=document.getElementById('mo-venues-current');if(panel){panel.remove();return}
+  panel=document.createElement('section');panel.id='mo-venues-current';
+  panel.style.cssText='position:fixed;inset:0;z-index:2147483600;background:#f8fafc;color:#17324a;overflow:auto;padding:16px;box-sizing:border-box;font:15px system-ui';
+  const head=document.createElement('div');head.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:12px';
+  const title=document.createElement('h2');title.textContent='Spielstätten A–Z · Stand November 2026';title.style.margin='0';
+  const close=document.createElement('button');close.textContent='Schließen';close.onclick=()=>panel.remove();head.append(title,close);panel.append(head);
+  const info=document.createElement('p');info.textContent='Dienstorte aus dem aktuellen Kalender. Unbestätigte Adressen werden nicht als Navigationsziel verwendet.';panel.append(info);
+  for(const [name,address,detail] of venues){
+   const card=document.createElement('article');card.style.cssText='background:white;border:1px solid #dce4eb;border-radius:8px;padding:12px;margin:9px 0';
+   const h=document.createElement('strong');h.textContent=name;h.style.display='block';card.append(h);
+   const a=document.createElement('p');a.textContent=address||'Adresse noch zu bestätigen';a.style.margin='6px 0';card.append(a);
+   if(detail){const d=document.createElement('small');d.textContent=detail;d.style.display='block';card.append(d)}
+   if(address){const link=document.createElement('a');link.href='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(address);link.target='_blank';link.rel='noopener noreferrer';link.textContent='↗ Google Maps – navigieren';card.append(link)}
+   panel.append(card)
+  }
+  document.body.append(panel)
+ };
+})();
+</script></body></html>
