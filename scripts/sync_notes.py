@@ -26,11 +26,12 @@ instruments={
     "Oboe":r"(?<![a-z])(?:oboe|ob\.?)(?![a-z])",
     "Klarinette":r"(?<![a-z])(?:klarinette|clarinet|kl\.?)(?![a-z])",
     "Fagott":r"(?<![a-z])(?:fagott|bassoon|fg\.?)(?![a-z])",
-    "Violine":r"(?<![a-z])(?:violine|violin|viol\.?|vl\.?)(?![a-z])",
-    "Viola":r"(?<![a-z])(?:viola|va\.?)(?![a-z])",
-    "Violoncello":r"(?<![a-z])(?:violoncello|cello|vc\.?)(?![a-z])",
-    "Kontrabass":r"(?<![a-z])(?:kontrabass|contrabass|kb\.?)(?![a-z])",
+    "Violine":r"(?<![a-z])(?:violins?|violinen|violine|viol\.?|vl\.?)(?![a-z])",
+    "Viola":r"(?<![a-z])(?:violas?|va\.?)(?![a-z])",
+    "Violoncello":r"(?<![a-z])(?:violoncello|cellos?|vc\.?)(?![a-z])",
+    "Kontrabass":r"(?<![a-z])(?:kontrabass|contrabass|basses|double\s*bass|kb\.?)(?![a-z])",
     "Schlagwerk":r"(?<![a-z])(?:schlagwerk|pauke|percussion|perc\.?)(?![a-z])",
+    "Saxophon":r"(?<![a-z])(?:saxophon|saxophone|sax)(?![a-z])",
     "Cembalo":r"(?<![a-z])(?:cembalo|harpsichord)(?![a-z])",
 }
 def infer(name):
@@ -69,7 +70,7 @@ for item in incoming:
         "id":fid,"name":name,"path":path,
         "production":path[0] if path else "Sonstiges",
         "work":path[-1] if path else name.rsplit(".",1)[0],
-        "instruments":normalize_trombones(name, previous.get("instruments",[]) if unchanged else infer(name)),
+        "instruments":normalize_trombones(name, sorted(set(previous.get("instruments",[]) if unchanged else []) | set(infer(name)))),
         "hornVoices":previous.get("hornVoices",[]) if unchanged else [],
         "url":f"https://drive.google.com/file/d/{fid}/view"
     })
