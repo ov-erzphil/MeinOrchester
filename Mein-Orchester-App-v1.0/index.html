@@ -3,7 +3,7 @@
 const key='mo_colleagues_auth_v2', lifetime=90*24*60*60*1000;
 const expected='66b91cd6ca4ea113ac9c609c37ddeb5ae2aacfdb5133d31c5846a8093593c2ed';
 const login=document.getElementById('mo-login'),app=document.getElementById('app');
-function launch(){login.style.display='none';app.src=app.dataset.src}
+function launch(){login.style.display='none';const u=new URL(app.dataset.src,location.href);u.searchParams.set('refresh',Date.now().toString());app.src=u.href}
 let valid=false;try{const saved=JSON.parse(localStorage.getItem(key)||'null');valid=!!saved&&saved.expires>Date.now()}catch{}
 if(valid){launch()}else{login.style.display='flex'}
 document.getElementById('mo-login-form').addEventListener('submit',async e=>{
