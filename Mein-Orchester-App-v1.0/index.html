@@ -88,9 +88,9 @@ document.getElementById('app').addEventListener('load',function(){
   panel=doc.createElement('section');panel.id='mo-venue-directory';panel.setAttribute('aria-label','Alphabetische Spielstätten');
   panel.style.cssText='position:fixed;inset:48px 0 0;z-index:2147482900;background:#f8fafc;color:#17324a;overflow:auto;padding:16px;box-sizing:border-box;font:15px system-ui';
   const header=doc.createElement('div');header.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:12px';
-  const h=doc.createElement('h2');h.textContent='Spielstätten A–Z';h.style.margin='0';
+  const h=doc.createElement('h2');h.textContent='Orte A–Z';h.style.margin='0';
   const close=doc.createElement('button');close.type='button';close.textContent='Schließen';close.onclick=()=>panel.remove();header.append(h,close);panel.append(header);
-  const info=doc.createElement('p');info.textContent='Alphabetisch nach Spielstättenname. Die bisherigen Orte der App bleiben im Hintergrund erhalten.';panel.append(info);
+  const info=doc.createElement('p');info.textContent='Alphabetisch nach Ortsbezeichnung';panel.append(info);
   let lastLetter='';
   for(const venue of moVenues){
    const letter=venue.name.trim().charAt(0).toLocaleUpperCase('de');
@@ -109,6 +109,7 @@ document.getElementById('app').addEventListener('load',function(){
   }
   doc.body.append(panel);
  };
+ window.moOpenVenues=showVenueDirectory;
  doc.addEventListener('click',event=>{
   const target=event.target.closest?.('button,a,[role=tab]');
   if(!target)return;
@@ -163,4 +164,11 @@ document.getElementById('app').addEventListener('load',function(){
  doc.body.append(script);
  }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
 });
+</script><script>
+(function(){
+ const btn=document.createElement('button');btn.id='mo-places-az';btn.type='button';btn.textContent='Orte A–Z';btn.title='Alphabetische Ortsübersicht öffnen';
+ btn.style.cssText='position:fixed;top:5px;right:8px;z-index:2147483500;padding:7px 12px;background:#185b77;color:white;border:0;border-radius:7px;font:600 14px system-ui;cursor:pointer;box-shadow:0 2px 8px #0003';
+ btn.onclick=()=>{if(typeof window.moOpenVenues==='function'){window.moOpenVenues()}else{alert('Ortsübersicht wird geladen. Bitte die App neu laden.')}};
+ document.body.append(btn);
+})();
 </script><script>const dayplan=document.getElementById("dayplan");function openDayplan(){const url="https://www.erzgebirgische.theater/user/aktuell1.pdf";window.open(url,"_blank","noopener,noreferrer")};document.getElementById("refresh-dayplan").onclick=()=>openDayplan();document.getElementById("close-dayplan").onclick=()=>{dayplan.classList.remove("open");document.getElementById("dayplan-frame").removeAttribute("src")};</script></body></html>
