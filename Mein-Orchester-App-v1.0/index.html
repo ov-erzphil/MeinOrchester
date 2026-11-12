@@ -80,7 +80,7 @@ document.getElementById('app').addEventListener('load',function(){
      const isBassTrombone=f=>/\\b(?:bass[\\s_-]*posaune|bass[\\s_-]*trombone|posaune[\\s_-]*3|trombone[\\s_-]*3|3[.]?[\\s_-]*(?:posaune|trombone))\\b/i.test([f.name,...(f.instruments||[])].join(' '));
      const updateInstruments=()=>{
        const current=instrument.value;instrument.replaceChildren();
-       const scopedFiles=files.filter(f=>select.value==='Alle Produktionen'||f.production===select.value);const available=[...new Set([...scopedFiles.flatMap(f=>f.instruments||[]),...(scopedFiles.some(isBassTrombone)?['Bassposaune','Posaune 3']:[])])].sort((a,b)=>a.localeCompare(b,'de'));
+       const scopedFiles=files.filter(f=>select.value==='Alle Produktionen'||f.production===select.value);const available=[...new Set([...scopedFiles.flatMap(f=>(f.instruments||[]).map(i=>i==='Posaune 3'?'Bassposaune':i)),...(scopedFiles.some(isBassTrombone)?['Bassposaune']:[])])].sort((a,b)=>a.localeCompare(b,'de'));
        for(const name of ['Alle Instrumente',...available]){const opt=document.createElement('option');opt.value=name;opt.textContent=name;instrument.appendChild(opt)}
        instrument.value=available.includes(current)?current:'Alle Instrumente';
      };
