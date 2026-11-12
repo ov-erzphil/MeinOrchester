@@ -52,7 +52,7 @@ document.getElementById('app').addEventListener('load',function(){
    const key=(el.getAttribute('data-tab')||'').toLowerCase();
    if(!/^(orte|spielstätten)$/i.test(label)&&!/^(orte|spielstätten)$/i.test(aria)&&key!=='orte'&&key!=='venues')return;
    event.preventDefault();event.stopImmediatePropagation();
-   window.location.assign(new URL('./orte.html',window.location.href).href);
+   window.location.assign(new URL('./orte.html?stand=20261112b',window.location.href).href);
  };
  doc.addEventListener('pointerdown',openStaticOrte,true);
  doc.addEventListener('click',openStaticOrte,true);
