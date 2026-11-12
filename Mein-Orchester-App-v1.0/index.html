@@ -10,29 +10,127 @@ const moVenues=[
  ].sort((a,b)=>a.name.localeCompare(b.name,'de',{sensitivity:'base'}));
  moVenues.push(...[{"name":"48. Grundschule Dresden","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Altenpflegeheim Anton Günther, Bärenstein","address":"Anton-Günther-Weg 7, 09471 Bärenstein, Deutschland","detail":""},{"name":"Altenpflegeheim Sankt Anna, Annaberg-Buchholz","address":"Parkstraße 37, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"Bahnhofhalle Lugau","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Bürgergarten Stollberg","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Bürgersaal Zschopau","address":"An den Anlagen 16, 09405 Zschopau, Deutschland","detail":""},{"name":"Evangelische Schulgemeinschaft Erzgebirge","address":"Straße der Freundschaft 11, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"Förderschulzentrum Annaberg","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Grund- und Mittelschule Herrieden","address":"","detail":"Schulzentrum Herrieden; Adresse noch zu bestätigen"},{"name":"Hochschule für Musik Carl Maria von Weber Dresden","address":"Wettiner Platz 13, 01067 Dresden, Deutschland","detail":""},{"name":"Jenaplanschule im Erzgebirge","address":"Annaberger Straße 86, 08352 Raschau-Markersbach, Deutschland","detail":""},{"name":"Kirchliches Kinderhaus St. Michael","address":"Parkstraße 35, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"Kulturhaus AKTIVIST Bad Schlema","address":"Bergstraße 22, 08280 Aue-Bad Schlema, Deutschland","detail":"Kleiner Saal"},{"name":"Kulturzentrum Erzhammer","address":"Buchholzer Straße 2, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"Kurhaus Bad Steben","address":"","detail":"Historische Angaben Badstraße 25 und 31 widersprechen sich; Adresse prüfen"},{"name":"Mehrzweckhalle Lugau","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Refektorium Heilsbronn","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Saigerhütte Grünthal","address":"In der Hütte 10, 09526 Olbernhau, Deutschland","detail":"Bühne am Kraftwerk / Treibehaus"},{"name":"Seniorenidyll Königswalde","address":"Lindenstraße 62, 09471 Königswalde, Deutschland","detail":""},{"name":"St.-Annenkirche Annaberg-Buchholz","address":"Große Kirchgasse 21, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"St.-Jakobi-Kirche Stollberg","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Stadthalle Marienberg","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Staatliches Kurhaus Bad Steben (historischer Eintrag)","address":"Badstraße 25, 95138 Bad Steben, Deutschland","detail":"Historischer Kalendereintrag; Standort prüfen"},{"name":"Theater Most","address":"","detail":"Adresse noch zu bestätigen"}]);
  moVenues.push(...[{"name":"Altenpflegeheim Schneeberger Straße Aue","address":"Schneeberger Straße 98, 08280 Aue-Bad Schlema, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Evangelisches Seniorenpflegeheim Sehmatal","address":"Wohngebiet Ernst-Thälmann 25, 09465 Sehmatal, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Seniorenpflegeheim Albert-Schweitzer-Haus Raschau","address":"Straße des Friedens 18, 08352 Raschau-Markersbach, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Seniorenpflegeheim Albert-Schweitzer-Haus am Hofgarten","address":"Schneeberger Straße 21, 08340 Schwarzenberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Seniorenwohnpark Zschorlau","address":"Schneeberger Straße 3, 08321 Zschorlau, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Seniorenresidenz Am Markt Marienberg","address":"Fleischerstraße 2, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Pflegeheim Hoffnung Marienberg","address":"Tebrastraße 10, 09469 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Haus Lauckner Marienberg","address":"Freiberger Straße 23, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Kulturzentrum Villa Facius Lugau","address":"Hohensteiner Straße 2, 09385 Lugau, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Naturbühne Greifensteine","address":"09427 Ehrenfriedersdorf, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Waldbühne Schwarzenberg","address":"Am Rockelmann, 08340 Schwarzenberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Theater Variabel Olbernhau","address":"Markt 5, 09526 Olbernhau, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Erzgebirgsstadion Aue","address":"08280 Aue-Bad Schlema, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Kurpark Bad Schlema","address":"Am Kurpark, 08301 Aue-Bad Schlema, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Orangerie Fulda – Festsaal","address":"Pauluspromenade 2, 36037 Fulda, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Stadthalle Oelsnitz/Erzgebirge","address":"Rathausplatz 3, 09376 Oelsnitz/Erzgebirge, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Friedenskirche Aue-Zelle","address":"Kantstraße 2, 08280 Aue-Bad Schlema, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Erlebnis Bergwerk Merkers","address":"Zufahrtstraße 1, 36460 Krayenberggemeinde, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Museum sächsisch-böhmisches Erzgebirge","address":"Am Kaiserteich 3, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Freilichtbühne Oberwiesenthal","address":"09484 Oberwiesenthal, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"St.-Georgenkirche Schwarzenberg","address":"Obere Schloßstraße 32, 08340 Schwarzenberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Lukaskirche Dresden","address":"Lukasplatz 1, 01069 Dresden, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Stadtkirche St. Andreas Selb","address":"Martin-Luther-Platz 7, 95100 Selb, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Pferdegöpel Lauta","address":"Lauta, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Verkehrslandeplatz Chemnitz/Jahnsdorf","address":"Wilhermsdorfer Straße 43, 09387 Jahnsdorf, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Gemeindehaus Scheibenberg","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Grundschule Kühnhaide","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Grundschule Kleinrückerswalde","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Grundschule Aue-Bad Schlema","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Rathausinnenhof Aue","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Marktplatz Annaberg-Buchholz","address":"09456 Annaberg-Buchholz, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Theaterplatz Annaberg-Buchholz","address":"Theaterplatz, 09456 Annaberg-Buchholz, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Stadthalle Marienberg (Walter-Mehnert-Straße)","address":"Walter-Mehnert-Straße 3, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Refektorium Heilsbronn (Münsterplatz)","address":"Münsterplatz 1, 91560 Heilsbronn, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Veranstaltungsort Herrieden (Steinweg)","address":"Steinweg 8, 91567 Herrieden, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Theater Most (Tschechien)","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"}]);
- const postalCity=venue=>{
-  const m=(venue.address||'').match(/\\b\\d{5}\\s+([^,]+)/);
-  if(m)return m[1].trim();
-  const known={'48. Grundschule Dresden':'Dresden','Bahnhofhalle Lugau':'Lugau','Bürgergarten Stollberg':'Stollberg','Förderschulzentrum Annaberg':'Annaberg-Buchholz','Gemeindehaus Scheibenberg':'Scheibenberg','Grund- und Mittelschule Herrieden':'Herrieden','Grundschule Aue-Bad Schlema':'Aue-Bad Schlema','Grundschule Kleinrückerswalde':'Annaberg-Buchholz','Grundschule Kühnhaide':'Marienberg','Kurhaus Bad Steben':'Bad Steben','Mehrzweckhalle Lugau':'Lugau','Rathausinnenhof Aue':'Aue-Bad Schlema','Refektorium Heilsbronn':'Heilsbronn','St.-Jakobi-Kirche Stollberg':'Stollberg','Stadthalle Marienberg':'Marienberg','Theater Most':'Most','Theater Most (Tschechien)':'Most'};
-  return known[venue.name]||'Ort ungeklärt';
+ moVenues.sort((a,b)=>a.name.localeCompare(b.name,'de',{sensitivity:'base'}));
+ 
+function openIndependentVenues(){
+ const existing=document.getElementById('mo-independent-venues');if(existing){existing.remove();return}
+ const panel=document.createElement('section');panel.id='mo-independent-venues';panel.style.cssText='position:fixed;inset:0;z-index:20000;background:#f8fafc;color:#17324a;overflow:auto;padding:20px;box-sizing:border-box;font:15px system-ui';
+ const header=document.createElement('div');header.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:10px';const title=document.createElement('h2');title.textContent='Orte A–Z';const close=document.createElement('button');close.textContent='Schließen';close.type='button';close.style.cssText='padding:10px';close.onclick=()=>panel.remove();header.append(title,close);panel.append(header);
+ for(const venue of moVenues){const card=document.createElement('article');card.style.cssText='padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;background:white';const name=document.createElement('strong');name.textContent=venue.name;card.append(name);const address=document.createElement('div');address.textContent=venue.address||'Adresse noch offen';card.append(address);if(venue.address){const link=document.createElement('a');link.textContent='Navigieren';link.target='_blank';link.rel='noopener noreferrer';link.href='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(venue.address);card.append(link)}panel.append(card)}document.body.append(panel)
+}
+/* Statischer Link zum eigenständigen Ortsverzeichnis; keine JavaScript-Abhängigkeit. */
+})();
+</script><script>
+(async()=>{
+const key='mo_colleagues_auth_v2', lifetime=90*24*60*60*1000;
+const expected='66b91cd6ca4ea113ac9c609c37ddeb5ae2aacfdb5133d31c5846a8093593c2ed';
+const login=document.getElementById('mo-login'),app=document.getElementById('app');
+function launch(){login.style.display='none';const u=new URL(app.dataset.src,location.href);u.searchParams.set('refresh',Date.now().toString());app.src=u.href}
+let valid=false;try{const saved=JSON.parse(localStorage.getItem(key)||'null');valid=!!saved&&saved.expires>Date.now()}catch{}
+if(valid){launch()}else{login.style.display='flex'}
+document.getElementById('mo-login-form').addEventListener('submit',async e=>{
+e.preventDefault();
+const password=document.getElementById('mo-login-password').value;
+const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(password));
+const digest=Array.from(new Uint8Array(bytes),b=>b.toString(16).padStart(2,'0')).join('');
+if(digest!==expected){document.getElementById('mo-login-error').textContent='Passwort nicht korrekt.';return}
+localStorage.setItem(key,JSON.stringify({expires:Date.now()+lifetime}));launch();
+});
+})();
+document.getElementById('app').addEventListener('load',function(){
+ try{
+ const doc=this.contentDocument;
+ if(!doc)return;
+
+
+
+ // Originalen Menüpunkt Orte auf die funktionierende statische Liste umleiten.
+ const openStaticOrte=event=>{
+   const el=event.target?.closest?.('button,a,[role="tab"],[role="button"],[data-tab],.tab,nav > *');
+   if(!el)return;
+   const label=(el.textContent||'').trim(),aria=(el.getAttribute('aria-label')||'').trim();
+   const key=(el.getAttribute('data-tab')||'').toLowerCase();
+   if(!/^(orte|spielstätten)(\\s|$)/i.test(label)&&!/^(orte|spielstätten)(\\s|$)/i.test(aria)&&key!=='orte'&&key!=='venues'&&key!=='#orte'&&key!=='#venues')return;
+   event.preventDefault();event.stopImmediatePropagation();
+   window.location.assign(new URL('./orte.html?stand=20261112b',window.location.href).href);
  };
- const uniqueVenues=new Map();
- for(const venue of moVenues){const key=venue.name.toLocaleLowerCase('de')+'|'+(venue.address||'').toLocaleLowerCase('de');if(!uniqueVenues.has(key))uniqueVenues.set(key,venue)}
- moVenues.splice(0,moVenues.length,...uniqueVenues.values());
- const collator=new Intl.Collator('de',{sensitivity:'base',numeric:true});
- moVenues.sort((a,b)=>collator.compare(postalCity(a),postalCity(b))||collator.compare(a.name,b.name));
+ doc.addEventListener('pointerdown',openStaticOrte,true);
+ doc.addEventListener('click',openStaticOrte,true);
+ // Notenansicht mit aktuellem Katalog; die bestehende Navigation bleibt unverändert.
+ const showLiveNotes=async()=>{
+   let panel=document.getElementById('mo-notes-live-panel');
+   if(!panel){
+     panel=document.createElement('section');panel.id='mo-notes-live-panel';
+     panel.style.cssText='position:fixed;inset:0;z-index:2147483001;background:#f8fafc;color:#17324a;overflow:auto;padding:16px;box-sizing:border-box;font:15px system-ui';
+     panel.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2 style="margin:0">Notenarchiv</h2><button id="mo-notes-close" type="button" style="padding:9px">Schließen</button></div><label style="display:block;margin:14px 0">Produktion <select id="mo-notes-production" style="display:block;width:100%;padding:10px;font:inherit"></select></label><label style="display:block;margin:10px 0">Einzelstimme / Instrument <select id="mo-notes-instrument" style="display:block;width:100%;padding:10px;font:inherit"></select></label><label style="display:block;margin:10px 0">Suche nach Instrument oder Stück <input id="mo-notes-query" type="search" placeholder="z. B. Horn, Trompete, Nr. 06" style="display:block;width:100%;padding:10px;box-sizing:border-box;font:inherit"></label><p id="mo-notes-count"></p><div id="mo-notes-results">Lade Noten …</div>';
+     document.body.appendChild(panel);
+     panel.querySelector('#mo-notes-close').onclick=()=>panel.remove();
+   }
+   const results=panel.querySelector('#mo-notes-results'),select=panel.querySelector('#mo-notes-production'),instrument=panel.querySelector('#mo-notes-instrument'),query=panel.querySelector('#mo-notes-query');
+   results.textContent='Lade Noten …';
+   try{
+     const res=await fetch(new URL('../noten-katalog.json?t='+Date.now(),location.href),{cache:'no-store'});
+     if(!res.ok)throw Error('HTTP '+res.status);
+     const data=await res.json(),files=data.files||[];
+     const current=select.value;select.replaceChildren();
+     for(const name of ['Alle Produktionen',...new Set(files.map(f=>f.production))].sort((a,b)=>a==='Alle Produktionen'?-1:b==='Alle Produktionen'?1:a.localeCompare(b,'de'))){
+       const option=document.createElement('option');option.value=name;option.textContent=name;select.appendChild(option);
+     }
+     select.value=[...select.options].some(o=>o.value===current)?current:'Alle Produktionen';
+     const updateInstruments=()=>{
+       const current=instrument.value;instrument.replaceChildren();
+       const available=[...new Set(files.filter(f=>select.value==='Alle Produktionen'||f.production===select.value).flatMap(f=>f.instruments||[]))].sort((a,b)=>a.localeCompare(b,'de'));
+       for(const name of ['Alle Instrumente',...available]){const opt=document.createElement('option');opt.value=name;opt.textContent=name;instrument.appendChild(opt)}
+       instrument.value=available.includes(current)?current:'Alle Instrumente';
+     };
+     const render=()=>{
+       const term=query.value.toLocaleLowerCase('de'),production=select.value,inst=instrument.value;
+       const matching=files.filter(f=>(production==='Alle Produktionen'||f.production===production)&&(inst==='Alle Instrumente'||(f.instruments||[]).includes(inst))&&(!term||[f.name,f.work,f.production,...(f.instruments||[])].join(' ').toLocaleLowerCase('de').includes(term)));
+       panel.querySelector('#mo-notes-count').textContent=matching.length+' PDF-Dateien · Katalog: '+(data.generatedAt?new Date(data.generatedAt).toLocaleString('de-DE'):'unbekannt')+' · Links werden beim Öffnen aktualisiert';
+       results.replaceChildren();
+       for(const file of matching.slice(0,600)){
+         const link=document.createElement('a');link.href=file.url+(file.url.includes('?')?'&':'?')+'mo_refresh='+Date.now();link.target='_blank';link.rel='noopener noreferrer';
+         link.textContent='📄 '+file.name+((file.instruments||[]).includes('Posaune 3')&&/bass\s*(?:posaune|trombon)/i.test(file.name)?' (Posaune 3)':'');link.style.cssText='display:block;padding:10px;margin:5px 0;background:#fff;border:1px solid #dce4eb;border-radius:6px;color:#185b77;text-decoration:none';results.appendChild(link);
+       }
+     };
+     select.onchange=()=>{instrument.value='Alle Instrumente';updateInstruments();render()};instrument.onchange=render;query.oninput=render;updateInstruments();render();
+   }catch(err){results.textContent='Notenkatalog konnte nicht geladen werden: '+err.message;}
+ };
+ // Refresh the open archive every five minutes without requiring a page reload.
+ setInterval(()=>{if(document.getElementById('mo-notes-live-panel'))showLiveNotes()},300000);
+ const openNotes=event=>{
+   const target=event.target.closest?.('button,a,[role=tab]');
+   if(!target)return;
+   const label=(target.textContent||'').trim();
+   if(label==='Noten'||label==='Notenarchiv'){event.preventDefault();event.stopImmediatePropagation();showLiveNotes()}
+ };
+ doc.addEventListener('click',openNotes,true);
+
+
+ // Alphabetisches Spielstaettenverzeichnis mit festen Navigationsadressen.
+ const moVenues=[
+  {name:'Eduard-von-Winterstein-Theater',detail:'Hauptbühne / Studiobühne',address:'Buchholzer Straße 67, 09456 Annaberg-Buchholz, Deutschland'},
+  {name:'Kulturhaus Aue',detail:'',address:'Goethestraße 2, 08280 Aue-Bad Schlema, Deutschland'},
+  {name:'Nicolaikirche Aue',detail:'',address:'Schwarzenberger Straße 12, 08280 Aue-Bad Schlema, Deutschland'},
+  {name:'OPR – Probebühne',detail:'Orchesterprobenraum',address:'Wilischstraße 8, 09456 Annaberg-Buchholz, Deutschland'},
+  {name:'Probenort Aue – Ernst-Bauch-Straße',detail:'Gebäudebezeichnung noch zu bestätigen',address:'Ernst-Bauch-Straße 15, 08280 Aue-Bad Schlema, Deutschland'},
+  {name:'Volkshaus Thum',detail:'',address:'Neumarkt 4, 09419 Thum, Deutschland'}
+ ].sort((a,b)=>a.name.localeCompare(b.name,'de',{sensitivity:'base'}));
+ moVenues.push(...[{"name":"48. Grundschule Dresden","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Altenpflegeheim Anton Günther, Bärenstein","address":"Anton-Günther-Weg 7, 09471 Bärenstein, Deutschland","detail":""},{"name":"Altenpflegeheim Sankt Anna, Annaberg-Buchholz","address":"Parkstraße 37, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"Bahnhofhalle Lugau","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Bürgergarten Stollberg","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Bürgersaal Zschopau","address":"An den Anlagen 16, 09405 Zschopau, Deutschland","detail":""},{"name":"Evangelische Schulgemeinschaft Erzgebirge","address":"Straße der Freundschaft 11, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"Förderschulzentrum Annaberg","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Grund- und Mittelschule Herrieden","address":"","detail":"Schulzentrum Herrieden; Adresse noch zu bestätigen"},{"name":"Hochschule für Musik Carl Maria von Weber Dresden","address":"Wettiner Platz 13, 01067 Dresden, Deutschland","detail":""},{"name":"Jenaplanschule im Erzgebirge","address":"Annaberger Straße 86, 08352 Raschau-Markersbach, Deutschland","detail":""},{"name":"Kirchliches Kinderhaus St. Michael","address":"Parkstraße 35, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"Kulturhaus AKTIVIST Bad Schlema","address":"Bergstraße 22, 08280 Aue-Bad Schlema, Deutschland","detail":"Kleiner Saal"},{"name":"Kulturzentrum Erzhammer","address":"Buchholzer Straße 2, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"Kurhaus Bad Steben","address":"","detail":"Historische Angaben Badstraße 25 und 31 widersprechen sich; Adresse prüfen"},{"name":"Mehrzweckhalle Lugau","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Refektorium Heilsbronn","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Saigerhütte Grünthal","address":"In der Hütte 10, 09526 Olbernhau, Deutschland","detail":"Bühne am Kraftwerk / Treibehaus"},{"name":"Seniorenidyll Königswalde","address":"Lindenstraße 62, 09471 Königswalde, Deutschland","detail":""},{"name":"St.-Annenkirche Annaberg-Buchholz","address":"Große Kirchgasse 21, 09456 Annaberg-Buchholz, Deutschland","detail":""},{"name":"St.-Jakobi-Kirche Stollberg","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Stadthalle Marienberg","address":"","detail":"Adresse noch zu bestätigen"},{"name":"Staatliches Kurhaus Bad Steben (historischer Eintrag)","address":"Badstraße 25, 95138 Bad Steben, Deutschland","detail":"Historischer Kalendereintrag; Standort prüfen"},{"name":"Theater Most","address":"","detail":"Adresse noch zu bestätigen"}]);
+ moVenues.push(...[{"name":"Altenpflegeheim Schneeberger Straße Aue","address":"Schneeberger Straße 98, 08280 Aue-Bad Schlema, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Evangelisches Seniorenpflegeheim Sehmatal","address":"Wohngebiet Ernst-Thälmann 25, 09465 Sehmatal, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Seniorenpflegeheim Albert-Schweitzer-Haus Raschau","address":"Straße des Friedens 18, 08352 Raschau-Markersbach, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Seniorenpflegeheim Albert-Schweitzer-Haus am Hofgarten","address":"Schneeberger Straße 21, 08340 Schwarzenberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Seniorenwohnpark Zschorlau","address":"Schneeberger Straße 3, 08321 Zschorlau, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Seniorenresidenz Am Markt Marienberg","address":"Fleischerstraße 2, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Pflegeheim Hoffnung Marienberg","address":"Tebrastraße 10, 09469 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Haus Lauckner Marienberg","address":"Freiberger Straße 23, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Kulturzentrum Villa Facius Lugau","address":"Hohensteiner Straße 2, 09385 Lugau, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Naturbühne Greifensteine","address":"09427 Ehrenfriedersdorf, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Waldbühne Schwarzenberg","address":"Am Rockelmann, 08340 Schwarzenberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Theater Variabel Olbernhau","address":"Markt 5, 09526 Olbernhau, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Erzgebirgsstadion Aue","address":"08280 Aue-Bad Schlema, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Kurpark Bad Schlema","address":"Am Kurpark, 08301 Aue-Bad Schlema, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Orangerie Fulda – Festsaal","address":"Pauluspromenade 2, 36037 Fulda, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Stadthalle Oelsnitz/Erzgebirge","address":"Rathausplatz 3, 09376 Oelsnitz/Erzgebirge, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Friedenskirche Aue-Zelle","address":"Kantstraße 2, 08280 Aue-Bad Schlema, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Erlebnis Bergwerk Merkers","address":"Zufahrtstraße 1, 36460 Krayenberggemeinde, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Museum sächsisch-böhmisches Erzgebirge","address":"Am Kaiserteich 3, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Freilichtbühne Oberwiesenthal","address":"09484 Oberwiesenthal, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"St.-Georgenkirche Schwarzenberg","address":"Obere Schloßstraße 32, 08340 Schwarzenberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Lukaskirche Dresden","address":"Lukasplatz 1, 01069 Dresden, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Stadtkirche St. Andreas Selb","address":"Martin-Luther-Platz 7, 95100 Selb, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Pferdegöpel Lauta","address":"Lauta, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Verkehrslandeplatz Chemnitz/Jahnsdorf","address":"Wilhermsdorfer Straße 43, 09387 Jahnsdorf, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Gemeindehaus Scheibenberg","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Grundschule Kühnhaide","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Grundschule Kleinrückerswalde","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Grundschule Aue-Bad Schlema","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Rathausinnenhof Aue","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"},{"name":"Marktplatz Annaberg-Buchholz","address":"09456 Annaberg-Buchholz, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Theaterplatz Annaberg-Buchholz","address":"Theaterplatz, 09456 Annaberg-Buchholz, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Stadthalle Marienberg (Walter-Mehnert-Straße)","address":"Walter-Mehnert-Straße 3, 09496 Marienberg, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Refektorium Heilsbronn (Münsterplatz)","address":"Münsterplatz 1, 91560 Heilsbronn, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Veranstaltungsort Herrieden (Steinweg)","address":"Steinweg 8, 91567 Herrieden, Deutschland","detail":"Historischer Kalendereintrag"},{"name":"Theater Most (Tschechien)","address":"","detail":"Historischer Kalendereintrag – genaue Adresse offen"}]);
+ moVenues.sort((a,b)=>a.name.localeCompare(b.name,'de',{sensitivity:'base'}));
  const showVenueDirectory=()=>{
   let panel=doc.getElementById('mo-venue-directory');
   if(panel){panel.remove();return}
   panel=doc.createElement('section');panel.id='mo-venue-directory';panel.setAttribute('aria-label','Alphabetische Spielstätten');
   panel.style.cssText='position:fixed;inset:48px 0 0;z-index:2147482900;background:#f8fafc;color:#17324a;overflow:auto;padding:16px;box-sizing:border-box;font:15px system-ui';
   const header=doc.createElement('div');header.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:12px';
-  const h=doc.createElement('h2');h.textContent='Orte A–Z · sortiert nach Postort';h.style.margin='0';
+  const h=doc.createElement('h2');h.textContent='Orte A–Z · historisches Verzeichnis';h.style.margin='0';
   const close=doc.createElement('button');close.type='button';close.textContent='Schließen';close.onclick=()=>panel.remove();header.append(h,close);panel.append(header);
-  const info=doc.createElement('p');info.textContent='Zuerst der Ort nach der Postleitzahl, dann die Spielstätte';panel.append(info);
+  const info=doc.createElement('p');info.textContent='Alphabetisch nach Ortsbezeichnung';panel.append(info);
   let lastLetter='';
   for(const venue of moVenues){
-   const letter=postalCity(venue).trim().charAt(0).toLocaleUpperCase('de');
+   const letter=venue.name.trim().charAt(0).toLocaleUpperCase('de');
    if(letter!==lastLetter){
     const section=doc.createElement('h3');section.textContent=letter;
     section.setAttribute('aria-label','Spielstätten mit '+letter);
@@ -40,7 +138,7 @@ const moVenues=[
     panel.append(section);lastLetter=letter;
    }
    const card=doc.createElement('article');card.style.cssText='background:white;border:1px solid #dce4eb;border-radius:8px;padding:12px;margin:10px 0';
-   const title=doc.createElement('strong');title.textContent=postalCity(venue)+' – '+venue.name;title.style.display='block';
+   const title=doc.createElement('strong');title.textContent=venue.name;title.style.display='block';
    const address=doc.createElement('div');address.textContent=venue.address;address.style.margin='6px 0';
    card.append(title,address);
    if(venue.detail){const detail=doc.createElement('small');detail.textContent=venue.detail;detail.style.cssText='display:block;color:#536674;margin-bottom:7px';card.append(detail)}
