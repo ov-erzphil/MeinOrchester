@@ -8,23 +8,7 @@ KEY = os.environ.get('DRIVE_API_KEY')
 if not KEY:
     sys.exit('DRIVE_API_KEY missing (Google Cloud Drive API key required).')
 
-ALIASES = {
- 'Horn': r'(?<![a-z])(?:french[\s_-]*horns?|horns?|hrn\.?|hr\.?|hn\.?|cor(?:ni)?\.?)(?![a-z])',
- 'Flöte': r'(?<![a-z])(?:fl[oö]te|fl\.?|flute|flutes)(?![a-z])',
- 'Oboe': r'(?<![a-z])(?:oboe|ob\.?|oboes)(?![a-z])',
- 'Klarinette': r'(?<![a-z])(?:klarinette|kl\.?|clarinets?)(?![a-z])',
- 'Fagott': r'(?<![a-z])(?:fagott|fg\.?|bassoons?)(?![a-z])',
- 'Trompete': r'(?<![a-z])(?:trompete|trpt\.?|trumpets?)(?![a-z])',
- 'Posaune': r'(?<![a-z])(?:posaune|pos\.?|trombones?)(?![a-z])',
- 'Violine': r'(?<![a-z])(?:violins?|viol\.?|vln\.?)(?![a-z])',
- 'Viola': r'(?<![a-z])(?:violas?|va\.?|vla\.?)(?![a-z])',
- 'Violoncello': r'(?<![a-z])(?:violoncello|cellos?|vc\.?|vlc\.?)(?![a-z])',
- 'Kontrabass': r'(?<![a-z])(?:double[\s_-]*bass|basses|kontrabass|kb\.?)(?![a-z])',
- 'Harfe': r'(?<![a-z])(?:harfe|harp|hrf\.?)(?![a-z])',
- 'Pauke': r'(?<![a-z])(?:pauke|pauken|timpani)(?![a-z])',
- 'Schlagwerk': r'(?<![a-z])(?:schlagwerk|percussion|schlagzeug)(?![a-z])',
- 'Partitur': r'(?<![a-z])(?:partitur|score)(?![a-z])',
-}
+from instrument_names import classify, horn_voices
 
 def api(params):
     params = dict(params, key=KEY)
@@ -47,18 +31,8 @@ def children(folder):
         token=data.get('nextPageToken')
         if not token:break
 
-def instrument(filename):
-    low=filename.lower()
-    return [name for name,pat in ALIASES.items() if re.search(pat,low,re.I)]
-
-def voices(filename):
-    # Collect explicit voice numbers near the instrument, including '1. und 2. Hrn.'
-    s=filename.lower().removesuffix('.pdf')
-    found=[]
-    for m in re.finditer(r'(?<!\d)([1-9])\s*\.?\s*(?:und|&|\+|,|/|-)\s*([1-9])\s*\.?\s*(?:hrn|horn|hr\.|hn\.|cor)',s):
-        found.extend([int(m.group(1)),int(m.group(2))])
-    for m in re.finditer(r'(?:horn|hrn|hr\.|hn\.|cor)\s*[._ -]*([1-9])(?!\d)',s):found.append(int(m.group(1)))
-    return sorted(set(found))
+instrument = classify
+voices = horn_voices
 
 def main():
     todo=[(ROOT,[])]; entries=[]; folders=0; visited=set()

@@ -17,46 +17,8 @@ old={f["id"]:f for f in existing["files"]}
 if len(incoming)<len(old)*0.75:
     raise ValueError("More than 25% of PDFs missing; refusing to replace catalog")
 
-instruments={
-    "Horn":r"(?<![a-z])(?:horn|hrn\.?|corno)(?![a-z])",
-    "Trompete":r"(?<![a-z])(?:trompete|trp\.?|tpt\.?|trumpet)(?![a-z])",
-    "Posaune":r"(?<![a-z])(?:posaune|pos\.?|trombone)(?![a-z])",
-    "Tuba":r"(?<![a-z])tuba(?![a-z])",
-    "Flöte":r"(?<![a-z])(?:flöte|floete|flute|fl\.?)(?![a-z])",
-    "Oboe":r"(?<![a-z])(?:oboe|ob\.?)(?![a-z])",
-    "Klarinette":r"(?<![a-z])(?:klarinette|clarinet|kl\.?)(?![a-z])",
-    "Fagott":r"(?<![a-z])(?:fagott|bassoon|fg\.?)(?![a-z])",
-    "Violine":r"(?<![a-z])(?:violins?|violinen|violine|viol\.?|vl\.?)(?![a-z])",
-    "Viola":r"(?<![a-z])(?:violas?|va\.?)(?![a-z])",
-    "Violoncello":r"(?<![a-z])(?:violoncello|cellos?|vc\.?)(?![a-z])",
-    "Kontrabass":r"(?<![a-z])(?:kontrabass|contrabass|basses|double\s*bass|kb\.?)(?![a-z])",
-    "Schlagwerk":r"(?<![a-z])(?:schlagwerk|pauke|percussion|perc\.?)(?![a-z])",
-    "Saxophon":r"(?<![a-z])(?:saxophon|saxophone|sax)(?![a-z])",
-    "Cembalo":r"(?<![a-z])(?:cembalo|harpsichord)(?![a-z])",
-}
-def infer(name):
-    value=name.lower().replace("_"," ").replace("-"," ")
-    return [label for label,pattern in instruments.items() if re.search(pattern,value,re.I)]
-def normalize_trombones(name, tags):
-    """Bass trombone is the third trombone part, even if no number is printed."""
-    value=name.lower().replace("_"," ").replace("-"," ")
-    value=re.sub(r"\.pdf$","",value)
-    trombone=r"(?:posaune|trombone|trombon|pos\.?)"
-    if not re.search(trombone,value):
-        return tags
-    tags=[tag for tag in tags if tag not in ("Posaune 1","Posaune 2","Posaune 3")]
-    voices=set()
-    if re.search(r"(?:bass\s*posaune|bass\s*trombon(?:e)?|bassposaune)",value):
-        voices.add(3)
-    for m in re.finditer(r"(?:(?<!\d)([123])\s*[.]?\s*"+trombone+r"\b|"+trombone+r"\s*[.]?\s*([123])\b)",value):
-        voices.add(int(m.group(1) or m.group(2)))
-    # Combined parts, e.g. Posaune1+2.
-    if re.search(trombone+r"\s*1\s*[+&/]\s*2",value):
-        voices.update((1,2))
-    if "Posaune" not in tags:
-        tags.append("Posaune")
-    tags.extend(f"Posaune {n}" for n in sorted(voices))
-    return tags
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from instrument_names import classify, horn_voices
 
 files=[]
 for item in incoming:
@@ -70,8 +32,8 @@ for item in incoming:
         "id":fid,"name":name,"path":path,
         "production":path[0] if path else "Sonstiges",
         "work":path[-1] if path else name.rsplit(".",1)[0],
-        "instruments":normalize_trombones(name, sorted(set(previous.get("instruments",[]) if unchanged else []) | set(infer(name)))),
-        "hornVoices":previous.get("hornVoices",[]) if unchanged else [],
+        "instruments":classify(name),
+        "hornVoices":horn_voices(name),
         "url":f"https://drive.google.com/file/d/{fid}/view"
     })
 files.sort(key=lambda f:(f["production"].casefold(),f["work"].casefold(),f["name"].casefold()))
