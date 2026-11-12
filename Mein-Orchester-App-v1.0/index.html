@@ -77,15 +77,16 @@ document.getElementById('app').addEventListener('load',function(){
        const option=document.createElement('option');option.value=name;option.textContent=name;select.appendChild(option);
      }
      select.value=[...select.options].some(o=>o.value===current)?current:'Alle Produktionen';
+     const isBassTrombone=f=>/\\b(?:bass[\\s_-]*posaune|bass[\\s_-]*trombone|posaune[\\s_-]*3|trombone[\\s_-]*3|3[.]?[\\s_-]*(?:posaune|trombone))\\b/i.test([f.name,...(f.instruments||[])].join(' '));
      const updateInstruments=()=>{
        const current=instrument.value;instrument.replaceChildren();
-       const available=[...new Set(files.filter(f=>select.value==='Alle Produktionen'||f.production===select.value).flatMap(f=>f.instruments||[]))].sort((a,b)=>a.localeCompare(b,'de'));
+       const scopedFiles=files.filter(f=>select.value==='Alle Produktionen'||f.production===select.value);const available=[...new Set([...scopedFiles.flatMap(f=>f.instruments||[]),...(scopedFiles.some(isBassTrombone)?['Bassposaune','Posaune 3']:[])])].sort((a,b)=>a.localeCompare(b,'de'));
        for(const name of ['Alle Instrumente',...available]){const opt=document.createElement('option');opt.value=name;opt.textContent=name;instrument.appendChild(opt)}
        instrument.value=available.includes(current)?current:'Alle Instrumente';
      };
      const render=()=>{
        const term=query.value.toLocaleLowerCase('de'),production=select.value,inst=instrument.value;
-       const matching=files.filter(f=>(production==='Alle Produktionen'||f.production===production)&&(inst==='Alle Instrumente'||(f.instruments||[]).includes(inst))&&(!term||[f.name,f.work,f.production,...(f.instruments||[])].join(' ').toLocaleLowerCase('de').includes(term)));
+       const matching=files.filter(f=>(production==='Alle Produktionen'||f.production===production)&&(inst==='Alle Instrumente'||((inst==='Bassposaune'||inst==='Posaune 3')?isBassTrombone(f):(f.instruments||[]).includes(inst)))&&(!term||[f.name,f.work,f.production,...(f.instruments||[])].join(' ').toLocaleLowerCase('de').includes(term)));
        panel.querySelector('#mo-notes-count').textContent=matching.length+' PDF-Dateien · Katalog: '+(data.generatedAt?new Date(data.generatedAt).toLocaleString('de-DE'):'unbekannt')+' · Links werden beim Öffnen aktualisiert';
        results.replaceChildren();
        for(const file of matching.slice(0,600)){
