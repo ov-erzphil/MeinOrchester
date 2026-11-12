@@ -221,4 +221,36 @@ document.getElementById('app').addEventListener('load',function(){
  doc.body.append(script);
  }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
 });
-</script><script>const dayplan=document.getElementById("dayplan");function openDayplan(){dayplan.style.display="block"};const links=document.getElementById("dayplan-links");for(let n=1;n<=9;n++){const link=document.createElement("a");link.href="https://www.erzgebirgische.theater/user/aktuell"+n+".pdf";link.target="_blank";link.rel="noopener noreferrer";link.textContent="Tagesplan "+n;link.style.cssText="display:block;padding:15px;background:white;border:1px solid #bdcbd5;border-radius:8px;text-align:center;color:#185b77;font-weight:600;text-decoration:none";links.append(link)}document.getElementById("close-dayplan").onclick=()=>{dayplan.style.display="none"};</script></body></html>
+</script><script>const dayplan=document.getElementById("dayplan");function openDayplan(){dayplan.style.display="block"};const links=document.getElementById("dayplan-links");for(let n=1;n<=9;n++){const link=document.createElement("a");link.href="https://www.erzgebirgische.theater/user/aktuell"+n+".pdf";link.target="_blank";link.rel="noopener noreferrer";link.textContent="Tagesplan "+n;link.style.cssText="display:block;padding:15px;background:white;border:1px solid #bdcbd5;border-radius:8px;text-align:center;color:#185b77;font-weight:600;text-decoration:none";links.append(link)}document.getElementById("close-dayplan").onclick=()=>{dayplan.style.display="none"};</script><script>
+/* Eilmeldungen: read-only published JSON; no alert unless active=true. */
+(function(){
+ const source=new URL('./eilmeldung.json',location.href);
+ let lastShown='';
+ const overlay=document.createElement('section');
+ overlay.id='mo-emergency-overlay';
+ overlay.setAttribute('role','alertdialog');
+ overlay.setAttribute('aria-modal','true');
+ overlay.setAttribute('aria-labelledby','mo-emergency-title');
+ overlay.style.cssText='display:none;position:fixed;inset:0;z-index:2147483646;background:rgba(15,23,42,.82);padding:18px;box-sizing:border-box;align-items:center;justify-content:center;font:16px system-ui';
+ overlay.innerHTML='<div style="width:min(620px,100%);background:#b91c1c;color:white;border:4px solid white;border-radius:14px;padding:clamp(18px,5vw,36px);box-sizing:border-box;text-align:center;box-shadow:0 16px 50px #0008"><div style="font-size:clamp(22px,5vw,32px);font-weight:800">⚠ EILMELDUNG</div><h1 id="mo-emergency-title" style="font-size:clamp(24px,6vw,38px);margin:18px 0"></h1><p id="mo-emergency-detail" style="font-size:clamp(17px,4vw,23px);white-space:pre-wrap"></p><button id="mo-emergency-ack" type="button" style="background:white;color:#991b1b;border:0;border-radius:8px;padding:14px 24px;font:700 17px system-ui;margin-top:18px;cursor:pointer">Meldung gelesen – schließen</button></div>';
+ document.body.append(overlay);
+ overlay.querySelector('#mo-emergency-ack').onclick=()=>{overlay.style.display='none'};
+ async function checkEmergency(){
+  try{
+   const res=await fetch(source.href+'?t='+Date.now(),{cache:'no-store'});
+   if(!res.ok)return;
+   const data=await res.json();
+   if(data.active!==true||typeof data.title!=='string'||!data.title.trim())return;
+   const id=String(data.id||data.title+'|'+(data.message||''));
+   if(lastShown===id)return;
+   lastShown=id;
+   overlay.querySelector('#mo-emergency-title').textContent=data.title;
+   overlay.querySelector('#mo-emergency-detail').textContent=typeof data.message==='string'?data.message:'';
+   overlay.style.display='flex';
+  }catch(err){/* Offline: keep normal app usable. */}
+ }
+ checkEmergency();
+ setInterval(checkEmergency,60000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkEmergency()});
+})();
+</script></body></html>
