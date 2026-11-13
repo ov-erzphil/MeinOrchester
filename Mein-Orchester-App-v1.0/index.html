@@ -158,7 +158,7 @@ document.getElementById('app').addEventListener('load',function(){
   if(/^(orte|spielstätten)(\s|$)/i.test(label)||key==='#venues'||key==='#orte'){
    event.preventDefault();event.stopImmediatePropagation();
    showVenueDirectory();
-  }else if(/^(dienste|dienstplan|noten|notenarchiv|aktuell|downloads|tagesplan)(\s|$)/i.test(label)){
+  }else if(/^(dienste|dienstplan|noten|notenarchiv|aktuell|eilmeldung|downloads|tagesplan)(\s|$)/i.test(label)){
    doc.getElementById('mo-venue-directory')?.remove();
   }
  },true);
@@ -198,8 +198,8 @@ document.getElementById('app').addEventListener('load',function(){
  };
  doc.addEventListener('click',openDownloads,true);
  doc.addEventListener('pointerup',event=>{if(event.pointerType==='touch')openDownloads(event)},true);
-  const placeMenu=()=>{if(doc.getElementById('mo-theater-menu'))return;const candidates=[...doc.querySelectorAll('button,a,[role=tab]')];const anchor=candidates.find(x=>/^Notenarchiv$/i.test((x.textContent||'').trim()))||candidates.find(x=>/^Dienstplan$/i.test((x.textContent||'').trim()));if(!anchor)return;const tab=doc.createElement('button');tab.id='mo-theater-menu';tab.type='button';tab.textContent='Tagesplan';tab.title='Tagesplan Theater (PDF)';tab.setAttribute('aria-label','Tagesplan Theater (PDF)');tab.className=anchor.className;tab.style.cssText='cursor:pointer;white-space:normal;min-width:0';tab.onclick=()=>startDayplan();anchor.insertAdjacentElement('afterend',tab)};const labels={'Dienstplan':'Dienste','Spielstätten':'Orte','Eilmitteilungen':'Aktuell','Notenarchiv':'Noten','Dokumente':'Downloads'};const shorten=()=>{for(const el of doc.querySelectorAll('button,a,[role=tab]')){if(el.id==='mo-theater-menu')continue;const raw=(el.textContent||'').trim();if(labels[raw]){const node=[...el.childNodes].find(n=>n.nodeType===3&&n.textContent.trim()===raw);if(node)node.textContent=labels[raw];else if(el.children.length===0)el.textContent=labels[raw];el.title=raw;el.setAttribute('aria-label',raw)}}};const fitMobileMenu=()=>{
-  const names=new Set(['Dienste','Orte','Aktuell','Noten','Tagesplan','Downloads']);
+  const placeMenu=()=>{if(doc.getElementById('mo-theater-menu'))return;const candidates=[...doc.querySelectorAll('button,a,[role=tab]')];const anchor=candidates.find(x=>/^Notenarchiv$/i.test((x.textContent||'').trim()))||candidates.find(x=>/^Dienstplan$/i.test((x.textContent||'').trim()));if(!anchor)return;const tab=doc.createElement('button');tab.id='mo-theater-menu';tab.type='button';tab.textContent='Tagesplan';tab.title='Tagesplan Theater (PDF)';tab.setAttribute('aria-label','Tagesplan Theater (PDF)');tab.className=anchor.className;tab.style.cssText='cursor:pointer;white-space:normal;min-width:0';tab.onclick=()=>startDayplan();anchor.insertAdjacentElement('afterend',tab)};const labels={'Dienstplan':'Dienste','Spielstätten':'Orte','Eilmitteilungen':'Eilmeldung','Aktuell':'Eilmeldung','Aktuelles':'Eilmeldung','Notenarchiv':'Noten','Dokumente':'Downloads'};const shorten=()=>{for(const el of doc.querySelectorAll('button,a,[role=tab]')){if(el.id==='mo-theater-menu')continue;const raw=(el.textContent||'').trim();if(labels[raw]){const node=[...el.childNodes].find(n=>n.nodeType===3&&n.textContent.trim()===raw);if(node)node.textContent=labels[raw];else if(el.children.length===0)el.textContent=labels[raw];el.title=raw;el.setAttribute('aria-label',raw)}}};const fitMobileMenu=()=>{
+  const names=new Set(['Dienste','Orte','Eilmeldung','Noten','Tagesplan','Downloads']);
   const items=[...doc.querySelectorAll('button,a,[role=tab]')].filter(el=>names.has((el.textContent||'').trim()));
   if(items.length<4)return;
   const parents=new Map();for(const el of items){const p=el.parentElement;if(p)parents.set(p,(parents.get(p)||0)+1)}
