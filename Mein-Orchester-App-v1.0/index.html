@@ -276,12 +276,14 @@ document.getElementById('dayplan-retry').onclick=startDayplan;
    const res=await fetch(source.href+'?t='+Date.now(),{cache:'no-store'});
    if(!res.ok)return;
    const data=await res.json();
-   if(data.active!==true||typeof data.title!=='string'||!data.title.trim())return;
+   if(data.active!==true||typeof data.title!=='string'||!data.title.trim()){overlay.style.display='none';return;}
+   if(data.expiresAt&&Date.parse(data.expiresAt)<=Date.now()){overlay.style.display='none';return;}
+   if(data.expiresAt){clearTimeout(window.moAlertExpiryTimer);window.moAlertExpiryTimer=setTimeout(()=>{overlay.style.display='none'},Math.max(0,Math.min(2147483647,Date.parse(data.expiresAt)-Date.now())));}
    const id=String(data.id||data.title+'|'+(data.message||''));
    if(lastShown===id)return;
    lastShown=id;
    overlay.querySelector('#mo-emergency-title').textContent=data.title;
-   overlay.querySelector('#mo-emergency-detail').textContent=typeof data.message==='string'?data.message:'';
+   overlay.querySelector('#mo-emergency-detail').textContent=(typeof data.message==='string'?data.message:'')+(data.publishedAt?'\n\nStand: '+new Date(data.publishedAt).toLocaleString('de-DE'):'');
    overlay.style.display='flex';
   }catch(err){/* Offline: keep normal app usable. */}
  }
@@ -289,4 +291,4 @@ document.getElementById('dayplan-retry').onclick=startDayplan;
  setInterval(checkEmergency,60000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkEmergency()});
 })();
-</script></body></html>
+</script><script src="eilmeldungen.js?v=20261113"></script></body></html>

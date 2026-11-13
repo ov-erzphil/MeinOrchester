@@ -1,0 +1,33 @@
+name: Eilmeldungen aus Orchesterkalender übernehmen
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+  push:
+    paths:
+      - 'scripts/sync_alerts.py'
+      - '.github/workflows/eilmeldungen-sync.yml'
+permissions:
+  contents: write
+concurrency:
+  group: orchestra-alerts
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python scripts/sync_alerts.py
+      - name: Eilmeldungsstatus speichern
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Mein-Orchester-App-v1.0/eilmeldung.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Eilmeldungen aus freigegebenem Orchesterkalender aktualisieren'
+          git pull --rebase origin main
+          git push origin HEAD:main
