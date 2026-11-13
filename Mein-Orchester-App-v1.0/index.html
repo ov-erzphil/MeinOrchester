@@ -71,7 +71,7 @@ document.getElementById('app').addEventListener('load',function(){
    try{
      const res=await fetch(new URL('../noten-katalog.json?t='+Date.now(),location.href),{cache:'no-store'});
      if(!res.ok)throw Error('HTTP '+res.status);
-     const data=await res.json(),files=data.files||[];
+     const data=await res.json(),files=(data.files||[]).map(f=>({...f,instruments:Array.isArray(f.instruments)&&f.instruments.length?f.instruments:['Sonstiges']}));
      const current=select.value;select.replaceChildren();
      for(const name of ['Alle Produktionen',...new Set(files.map(f=>f.production))].sort((a,b)=>a==='Alle Produktionen'?-1:b==='Alle Produktionen'?1:a.localeCompare(b,'de'))){
        const option=document.createElement('option');option.value=name;option.textContent=name;select.appendChild(option);
@@ -89,7 +89,7 @@ document.getElementById('app').addEventListener('load',function(){
        const matching=files.filter(f=>(production==='Alle Produktionen'||f.production===production)&&(inst==='Alle Instrumente'||((inst==='Bassposaune'||inst==='Posaune 3')?isBassTrombone(f):(f.instruments||[]).includes(inst)))&&(!term||[f.name,f.work,f.production,...(f.instruments||[])].join(' ').toLocaleLowerCase('de').includes(term)));
        panel.querySelector('#mo-notes-count').textContent=matching.length+' PDF-Dateien · Katalog: '+(data.generatedAt?new Date(data.generatedAt).toLocaleString('de-DE'):'unbekannt')+' · Links werden beim Öffnen aktualisiert';
        results.replaceChildren();
-       for(const file of matching.slice(0,600)){
+       for(const file of matching){
          const link=document.createElement('a');link.href=file.url+(file.url.includes('?')?'&':'?')+'mo_refresh='+Date.now();link.target='_blank';link.rel='noopener noreferrer';
          link.textContent='📄 '+file.name+((file.instruments||[]).includes('Posaune 3')&&/bass\s*(?:posaune|trombon)/i.test(file.name)?' (Posaune 3)':'');link.style.cssText='display:block;padding:10px;margin:5px 0;background:#fff;border:1px solid #dce4eb;border-radius:6px;color:#185b77;text-decoration:none';results.appendChild(link);
        }
