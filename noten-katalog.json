@@ -26585,7 +26585,9 @@
       "production": "Neujahrskonzert",
       "work": "Waldteufel_Spanien-Walzer",
       "url": "https://drive.google.com/file/d/1DnY3f5Y4TaJVNr2EXht1-4AkOfz0Nvna/view",
-      "instruments": [],
+      "instruments": [
+        "Sonstiges"
+      ],
       "hornVoices": []
     },
     {
