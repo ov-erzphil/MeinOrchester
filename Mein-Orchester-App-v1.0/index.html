@@ -1,4 +1,4 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mein Orchester App – Version 1.0</title><style>html,body{margin:0;height:100%;overflow:hidden}body{display:flex;flex-direction:column}body>#app{margin-top:0!important}#dayplan{display:none;position:absolute;inset:45px 0 0;background:white;z-index:20;flex-direction:column}#dayplan.open{display:flex}#dayplan iframe{flex:1;width:100%;border:0}#dayplan .bar{padding:8px;display:flex;justify-content:space-between;gap:8px;background:#edf2f5;font:14px system-ui}#dayplan .bar a{color:#185b77}iframe{width:100%;min-height:0;flex:1;border:0;display:block}</style></head><body><div id="dayplan" role="region" aria-label="Tagesplan auswählen" style="display:none;position:fixed;inset:0;z-index:1001;background:#f8fafc;color:#17324a;overflow:auto;padding:20px;box-sizing:border-box;font:16px system-ui"><div style="max-width:650px;margin:auto"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><h2>Tagesplan des Theaters</h2><button id="close-dayplan" type="button" style="padding:10px">Zurück zur App</button></div><p>Das Theater kann den Tagesplan unter aktuell1.pdf bis aktuell9.pdf bereitstellen. Wähle die vorhandene Datei. Nicht vorhandene Dateien zeigen beim Theater einen 404-Fehler.</p><div id="dayplan-links" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px"></div><p style="font-size:13px;color:#536674">Die automatische Prüfung ist wegen der fremden Website und möglicher Anmeldung nicht zuverlässig möglich.</p></div></div><section id="mo-login" style="display:none;position:fixed;inset:0;z-index:9999;background:#102d40;color:white;align-items:center;justify-content:center;padding:20px;font:16px system-ui"><form id="mo-login-form" style="width:min(360px,100%);display:grid;gap:14px"><h1 style="margin:0;font-size:25px">Mein Orchester</h1><p style="margin:0">Bitte das gemeinsame Orchester-Passwort eingeben. Die Anmeldung gilt 90 Tage auf diesem Gerät.</p><input id="mo-login-password" type="password" autocomplete="current-password" required placeholder="Orchester-Passwort" style="font:inherit;padding:13px;border-radius:7px;border:1px solid #ccc"><button style="font:inherit;padding:13px;background:#28734c;color:white;border:0;border-radius:7px">App öffnen</button><small id="mo-login-error" role="alert" style="color:#ffbdbd"></small></form></section><iframe id="app" title="Mein Orchester App – Version 1.0" data-src="../index.html?downloads=20261029b"></iframe><script>
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mein Orchester App – Version 1.0</title><style>html,body{margin:0;height:100%;overflow:hidden}body{display:flex;flex-direction:column}body>#app{margin-top:0!important}#dayplan{display:none;position:absolute;inset:45px 0 0;background:white;z-index:20;flex-direction:column}#dayplan.open{display:flex}#dayplan iframe{flex:1;width:100%;border:0}#dayplan .bar{padding:8px;display:flex;justify-content:space-between;gap:8px;background:#edf2f5;font:14px system-ui}#dayplan .bar a{color:#185b77}iframe{width:100%;min-height:0;flex:1;border:0;display:block}</style></head><body><div id="dayplan" role="region" aria-label="Aktueller Tagesplan" style="display:none;position:fixed;inset:0;z-index:1001;background:#f8fafc;color:#17324a;overflow:auto;padding:20px;box-sizing:border-box;font:16px system-ui"><div style="max-width:650px;margin:auto"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><h2>Tagesplan des Theaters</h2><button id="close-dayplan" type="button" style="padding:10px">Zurück zur App</button></div><p id="dayplan-status" role="status">Der aktuelle Tagesplan wird geladen …</p><a id="dayplan-download" hidden target="_blank" rel="noopener noreferrer" style="padding:15px;background:white;border:1px solid #bdcbd5;border-radius:8px;color:#185b77;font-weight:600;text-decoration:none">Tagesplan öffnen / herunterladen</a><p><button id="dayplan-retry" type="button">Erneut laden</button></p></div></div><section id="mo-login" style="display:none;position:fixed;inset:0;z-index:9999;background:#102d40;color:white;align-items:center;justify-content:center;padding:20px;font:16px system-ui"><form id="mo-login-form" style="width:min(360px,100%);display:grid;gap:14px"><h1 style="margin:0;font-size:25px">Mein Orchester</h1><p style="margin:0">Bitte das gemeinsame Orchester-Passwort eingeben. Die Anmeldung gilt 90 Tage auf diesem Gerät.</p><input id="mo-login-password" type="password" autocomplete="current-password" required placeholder="Orchester-Passwort" style="font:inherit;padding:13px;border-radius:7px;border:1px solid #ccc"><button style="font:inherit;padding:13px;background:#28734c;color:white;border:0;border-radius:7px">App öffnen</button><small id="mo-login-error" role="alert" style="color:#ffbdbd"></small></form></section><iframe id="app" title="Mein Orchester App – Version 1.0" data-src="../index.html?downloads=20261029b"></iframe><script>
 (function(){
 const moVenues=[
   {name:'Eduard-von-Winterstein-Theater',detail:'Hauptbühne / Studiobühne',address:'Buchholzer Straße 67, 09456 Annaberg-Buchholz, Deutschland'},
@@ -198,7 +198,7 @@ document.getElementById('app').addEventListener('load',function(){
  };
  doc.addEventListener('click',openDownloads,true);
  doc.addEventListener('pointerup',event=>{if(event.pointerType==='touch')openDownloads(event)},true);
-  const placeMenu=()=>{if(doc.getElementById('mo-theater-menu'))return;const candidates=[...doc.querySelectorAll('button,a,[role=tab]')];const anchor=candidates.find(x=>/^Notenarchiv$/i.test((x.textContent||'').trim()))||candidates.find(x=>/^Dienstplan$/i.test((x.textContent||'').trim()));if(!anchor)return;const tab=doc.createElement('button');tab.id='mo-theater-menu';tab.type='button';tab.textContent='Tagesplan';tab.title='Tagesplan Theater (PDF)';tab.setAttribute('aria-label','Tagesplan Theater (PDF)');tab.className=anchor.className;tab.style.cssText='cursor:pointer;white-space:normal;min-width:0';tab.onclick=()=>openDayplan();anchor.insertAdjacentElement('afterend',tab)};const labels={'Dienstplan':'Dienste','Spielstätten':'Orte','Eilmitteilungen':'Aktuell','Notenarchiv':'Noten','Dokumente':'Downloads'};const shorten=()=>{for(const el of doc.querySelectorAll('button,a,[role=tab]')){if(el.id==='mo-theater-menu')continue;const raw=(el.textContent||'').trim();if(labels[raw]){const node=[...el.childNodes].find(n=>n.nodeType===3&&n.textContent.trim()===raw);if(node)node.textContent=labels[raw];else if(el.children.length===0)el.textContent=labels[raw];el.title=raw;el.setAttribute('aria-label',raw)}}};const fitMobileMenu=()=>{
+  const placeMenu=()=>{if(doc.getElementById('mo-theater-menu'))return;const candidates=[...doc.querySelectorAll('button,a,[role=tab]')];const anchor=candidates.find(x=>/^Notenarchiv$/i.test((x.textContent||'').trim()))||candidates.find(x=>/^Dienstplan$/i.test((x.textContent||'').trim()));if(!anchor)return;const tab=doc.createElement('button');tab.id='mo-theater-menu';tab.type='button';tab.textContent='Tagesplan';tab.title='Tagesplan Theater (PDF)';tab.setAttribute('aria-label','Tagesplan Theater (PDF)');tab.className=anchor.className;tab.style.cssText='cursor:pointer;white-space:normal;min-width:0';tab.onclick=()=>startDayplan();anchor.insertAdjacentElement('afterend',tab)};const labels={'Dienstplan':'Dienste','Spielstätten':'Orte','Eilmitteilungen':'Aktuell','Notenarchiv':'Noten','Dokumente':'Downloads'};const shorten=()=>{for(const el of doc.querySelectorAll('button,a,[role=tab]')){if(el.id==='mo-theater-menu')continue;const raw=(el.textContent||'').trim();if(labels[raw]){const node=[...el.childNodes].find(n=>n.nodeType===3&&n.textContent.trim()===raw);if(node)node.textContent=labels[raw];else if(el.children.length===0)el.textContent=labels[raw];el.title=raw;el.setAttribute('aria-label',raw)}}};const fitMobileMenu=()=>{
   const names=new Set(['Dienste','Orte','Aktuell','Noten','Tagesplan','Downloads']);
   const items=[...doc.querySelectorAll('button,a,[role=tab]')].filter(el=>names.has((el.textContent||'').trim()));
   if(items.length<4)return;
@@ -221,7 +221,43 @@ document.getElementById('app').addEventListener('load',function(){
  doc.body.append(script);
  }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
 });
-</script><script>const dayplan=document.getElementById("dayplan");function openDayplan(){dayplan.style.display="block"};const links=document.getElementById("dayplan-links");for(let n=1;n<=9;n++){const link=document.createElement("a");link.href="https://www.erzgebirgische.theater/user/aktuell"+n+".pdf";link.target="_blank";link.rel="noopener noreferrer";link.textContent="Tagesplan "+n;link.style.cssText="display:block;padding:15px;background:white;border:1px solid #bdcbd5;border-radius:8px;text-align:center;color:#185b77;font-weight:600;text-decoration:none";links.append(link)}document.getElementById("close-dayplan").onclick=()=>{dayplan.style.display="none"};</script><script>
+</script><script>
+const dayplan=document.getElementById('dayplan');
+async function openDayplan(){
+ dayplan.style.display='block';
+ const status=document.getElementById('dayplan-status');
+ const link=document.getElementById('dayplan-download');
+ status.textContent='Der aktuelle Tagesplan wird geladen …';link.hidden=true;
+ try{
+  const response=await fetch(new URL('../tagesplan-aktuell.json?t='+Date.now(),location.href),{cache:'no-store'});
+  if(!response.ok)throw Error('Auswahl nicht erreichbar');
+  const plan=await response.json();
+  if(!plan.available||!plan.url)throw Error('Kein Tagesplan verfügbar');
+  const url=new URL(plan.url);
+  if(url.origin!=='https://www.erzgebirgische.theater'||!url.pathname.startsWith('/user/')||!url.pathname.toLowerCase().endsWith('.pdf'))throw Error('Ungültiger Tagesplan');
+  const checked=Date.parse(plan.checkedAt);
+  if(!Number.isFinite(checked)||Date.now()-checked>24*60*60*1000)throw Error('Tagesplanprüfung muss aktualisiert werden');
+  url.searchParams.set('mo_refresh',Date.now());
+  link.href=url.href;link.hidden=false;
+  const today=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Berlin'}).format(new Date());
+  const dates=Array.isArray(plan.dates)?plan.dates:[];
+  status.textContent=dates.includes(today)?'Der aktuelle Tagesplan ist bereit.':'Der zuletzt verfügbare Tagesplan ist bereit.';
+  // A same-origin helper tab avoids popup blocking after the asynchronous lookup.
+  const target=window.moDayplanWindow;
+  if(target&&!target.closed){target.location.replace(url.href);window.moDayplanWindow=null;dayplan.style.display='none';}
+ }catch(error){
+  status.textContent='Der Tagesplan ist gerade nicht automatisch abrufbar. Bitte erneut laden.';
+  if(window.moDayplanWindow&&!window.moDayplanWindow.closed){window.moDayplanWindow.close();window.moDayplanWindow=null;}
+ }
+}
+function startDayplan(){
+ window.moDayplanWindow=window.open('about:blank','mo-theater-dayplan');
+ if(window.moDayplanWindow){try{window.moDayplanWindow.opener=null;window.moDayplanWindow.document.title='Tagesplan wird geladen';window.moDayplanWindow.document.body.textContent='Der aktuelle Tagesplan wird geladen …';}catch(e){}}
+ return openDayplan();
+}
+document.getElementById('close-dayplan').onclick=()=>{dayplan.style.display='none'};
+document.getElementById('dayplan-retry').onclick=startDayplan;
+</script><script>
 /* Eilmeldungen: read-only published JSON; no alert unless active=true. */
 (function(){
  const source=new URL('./eilmeldung.json',location.href);
