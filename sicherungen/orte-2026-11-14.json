@@ -1,0 +1,338 @@
+{
+  "quelle": "Mein-Orchester-App-v1.0/orte.html",
+  "stand": "2026-11-14",
+  "hinweis": "Sicherung der veröffentlichten Ortsliste; noch kein automatischer Abgleich mit Kalendereinträgen",
+  "anzahl": 66,
+  "orte": [
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Altenpflegeheim Sankt Anna, Annaberg-Buchholz",
+      "anschrift": "Parkstraße 37, 09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Eduard-von-Winterstein-Theater",
+      "anschrift": "Buchholzer Straße 67, 09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Evangelische Schulgemeinschaft Erzgebirge",
+      "anschrift": "Straße der Freundschaft 11, 09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Förderschulzentrum Annaberg",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Grundschule Kleinrückerswalde",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Kirchliches Kinderhaus St. Michael",
+      "anschrift": "Parkstraße 35, 09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Kulturzentrum Erzhammer",
+      "anschrift": "Buchholzer Straße 2, 09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Marktplatz Annaberg-Buchholz",
+      "anschrift": "09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "OPR",
+      "anschrift": "Wilischstraße 8, 09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "St.-Annenkirche Annaberg-Buchholz",
+      "anschrift": "Große Kirchgasse 21, 09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Annaberg-Buchholz",
+      "spielstaette": "Theaterplatz Annaberg-Buchholz",
+      "anschrift": "Theaterplatz, 09456 Annaberg-Buchholz, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Altenpflegeheim Schneeberger Straße Aue",
+      "anschrift": "Schneeberger Straße 98, 08280 Aue-Bad Schlema, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Erzgebirgsstadion Aue",
+      "anschrift": "08280 Aue-Bad Schlema, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Friedenskirche Aue-Zelle",
+      "anschrift": "Kantstraße 2, 08280 Aue-Bad Schlema, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Grundschule Aue-Bad Schlema",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Kulturhaus AKTIVIST Bad Schlema",
+      "anschrift": "Bergstraße 22, 08280 Aue-Bad Schlema, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Kulturhaus Aue",
+      "anschrift": "Goethestraße 2, 08280 Aue-Bad Schlema, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Kurpark Bad Schlema",
+      "anschrift": "Am Kurpark, 08301 Aue-Bad Schlema, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Nicolaikirche Aue",
+      "anschrift": "Schwarzenberger Straße 12, 08280 Aue-Bad Schlema, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Probenort Aue",
+      "anschrift": "Ernst-Bauch-Straße 15, 08280 Aue-Bad Schlema, Deutschland"
+    },
+    {
+      "ort": "Aue-Bad Schlema",
+      "spielstaette": "Rathausinnenhof Aue",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Bad Steben",
+      "spielstaette": "Kurhaus Bad Steben",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Bad Steben",
+      "spielstaette": "Staatliches Kurhaus Bad Steben (historischer Eintrag)",
+      "anschrift": "Badstraße 25, 95138 Bad Steben, Deutschland"
+    },
+    {
+      "ort": "Bärenstein",
+      "spielstaette": "Altenpflegeheim Anton Günther, Bärenstein",
+      "anschrift": "Anton-Günther-Weg 7, 09471 Bärenstein, Deutschland"
+    },
+    {
+      "ort": "Dresden",
+      "spielstaette": "48. Grundschule Dresden",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Dresden",
+      "spielstaette": "Hochschule für Musik Carl Maria von Weber Dresden",
+      "anschrift": "Wettiner Platz 13, 01067 Dresden, Deutschland"
+    },
+    {
+      "ort": "Dresden",
+      "spielstaette": "Lukaskirche Dresden",
+      "anschrift": "Lukasplatz 1, 01069 Dresden, Deutschland"
+    },
+    {
+      "ort": "Ehrenfriedersdorf",
+      "spielstaette": "Naturbühne Greifensteine",
+      "anschrift": "09427 Ehrenfriedersdorf, Deutschland"
+    },
+    {
+      "ort": "Fulda",
+      "spielstaette": "Orangerie Fulda",
+      "anschrift": "Pauluspromenade 2, 36037 Fulda, Deutschland"
+    },
+    {
+      "ort": "Heilsbronn",
+      "spielstaette": "Refektorium Heilsbronn",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Heilsbronn",
+      "spielstaette": "Refektorium Heilsbronn (Münsterplatz)",
+      "anschrift": "Münsterplatz 1, 91560 Heilsbronn, Deutschland"
+    },
+    {
+      "ort": "Herrieden",
+      "spielstaette": "Grund- und Mittelschule Herrieden",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Herrieden",
+      "spielstaette": "Veranstaltungsort Herrieden (Steinweg)",
+      "anschrift": "Steinweg 8, 91567 Herrieden, Deutschland"
+    },
+    {
+      "ort": "Jahnsdorf",
+      "spielstaette": "Verkehrslandeplatz Chemnitz/Jahnsdorf",
+      "anschrift": "Wilhermsdorfer Straße 43, 09387 Jahnsdorf, Deutschland"
+    },
+    {
+      "ort": "Königswalde",
+      "spielstaette": "Seniorenidyll Königswalde",
+      "anschrift": "Lindenstraße 62, 09471 Königswalde, Deutschland"
+    },
+    {
+      "ort": "Krayenberggemeinde",
+      "spielstaette": "Erlebnis Bergwerk Merkers",
+      "anschrift": "Zufahrtstraße 1, 36460 Krayenberggemeinde, Deutschland"
+    },
+    {
+      "ort": "Lugau",
+      "spielstaette": "Bahnhofhalle Lugau",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Lugau",
+      "spielstaette": "Kulturzentrum Villa Facius Lugau",
+      "anschrift": "Hohensteiner Straße 2, 09385 Lugau, Deutschland"
+    },
+    {
+      "ort": "Lugau",
+      "spielstaette": "Mehrzweckhalle Lugau",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Marienberg",
+      "spielstaette": "Grundschule Kühnhaide",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Marienberg",
+      "spielstaette": "Haus Lauckner Marienberg",
+      "anschrift": "Freiberger Straße 23, 09496 Marienberg, Deutschland"
+    },
+    {
+      "ort": "Marienberg",
+      "spielstaette": "Museum sächsisch-böhmisches Erzgebirge",
+      "anschrift": "Am Kaiserteich 3, 09496 Marienberg, Deutschland"
+    },
+    {
+      "ort": "Marienberg",
+      "spielstaette": "Pferdegöpel Lauta",
+      "anschrift": "Lauta, 09496 Marienberg, Deutschland"
+    },
+    {
+      "ort": "Marienberg",
+      "spielstaette": "Pflegeheim Hoffnung Marienberg",
+      "anschrift": "Tebrastraße 10, 09469 Marienberg, Deutschland"
+    },
+    {
+      "ort": "Marienberg",
+      "spielstaette": "Seniorenresidenz Am Markt Marienberg",
+      "anschrift": "Fleischerstraße 2, 09496 Marienberg, Deutschland"
+    },
+    {
+      "ort": "Marienberg",
+      "spielstaette": "Stadthalle Marienberg",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Marienberg",
+      "spielstaette": "Stadthalle Marienberg (Walter-Mehnert-Straße)",
+      "anschrift": "Walter-Mehnert-Straße 3, 09496 Marienberg, Deutschland"
+    },
+    {
+      "ort": "Most",
+      "spielstaette": "Theater Most",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Most",
+      "spielstaette": "Theater Most (Tschechien)",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Oberwiesenthal",
+      "spielstaette": "Freilichtbühne Oberwiesenthal",
+      "anschrift": "09484 Oberwiesenthal, Deutschland"
+    },
+    {
+      "ort": "Oelsnitz/Erzgebirge",
+      "spielstaette": "Stadthalle Oelsnitz/Erzgebirge",
+      "anschrift": "Rathausplatz 3, 09376 Oelsnitz/Erzgebirge, Deutschland"
+    },
+    {
+      "ort": "Olbernhau",
+      "spielstaette": "Saigerhütte Grünthal",
+      "anschrift": "In der Hütte 10, 09526 Olbernhau, Deutschland"
+    },
+    {
+      "ort": "Olbernhau",
+      "spielstaette": "Theater Variabel Olbernhau",
+      "anschrift": "Markt 5, 09526 Olbernhau, Deutschland"
+    },
+    {
+      "ort": "Raschau-Markersbach",
+      "spielstaette": "Jenaplanschule im Erzgebirge",
+      "anschrift": "Annaberger Straße 86, 08352 Raschau-Markersbach, Deutschland"
+    },
+    {
+      "ort": "Raschau-Markersbach",
+      "spielstaette": "Seniorenpflegeheim Albert-Schweitzer-Haus Raschau",
+      "anschrift": "Straße des Friedens 18, 08352 Raschau-Markersbach, Deutschland"
+    },
+    {
+      "ort": "Scheibenberg",
+      "spielstaette": "Gemeindehaus Scheibenberg",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Schwarzenberg",
+      "spielstaette": "Seniorenpflegeheim Albert-Schweitzer-Haus am Hofgarten",
+      "anschrift": "Schneeberger Straße 21, 08340 Schwarzenberg, Deutschland"
+    },
+    {
+      "ort": "Schwarzenberg",
+      "spielstaette": "St.-Georgenkirche Schwarzenberg",
+      "anschrift": "Obere Schloßstraße 32, 08340 Schwarzenberg, Deutschland"
+    },
+    {
+      "ort": "Schwarzenberg",
+      "spielstaette": "Waldbühne Schwarzenberg",
+      "anschrift": "Am Rockelmann, 08340 Schwarzenberg, Deutschland"
+    },
+    {
+      "ort": "Sehmatal",
+      "spielstaette": "Evangelisches Seniorenpflegeheim Sehmatal",
+      "anschrift": "Wohngebiet Ernst-Thälmann 25, 09465 Sehmatal, Deutschland"
+    },
+    {
+      "ort": "Selb",
+      "spielstaette": "Stadtkirche St. Andreas Selb",
+      "anschrift": "Martin-Luther-Platz 7, 95100 Selb, Deutschland"
+    },
+    {
+      "ort": "Stollberg",
+      "spielstaette": "Bürgergarten Stollberg",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Stollberg",
+      "spielstaette": "St.-Jakobi-Kirche Stollberg",
+      "anschrift": "Adresse noch zu bestätigen"
+    },
+    {
+      "ort": "Thum",
+      "spielstaette": "Volkshaus Thum",
+      "anschrift": "Neumarkt 4, 09419 Thum, Deutschland"
+    },
+    {
+      "ort": "Zschopau",
+      "spielstaette": "Bürgersaal Zschopau",
+      "anschrift": "An den Anlagen 16, 09405 Zschopau, Deutschland"
+    },
+    {
+      "ort": "Zschorlau",
+      "spielstaette": "Seniorenwohnpark Zschorlau",
+      "anschrift": "Schneeberger Straße 3, 08321 Zschorlau, Deutschland"
+    }
+  ]
+}
