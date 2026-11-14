@@ -53,3 +53,11 @@ Berufsorchester-App für Dienstplan, Notenarchiv und Navigation. Bestehende best
 
 ## Dokumentationsregel
 Diese Datei nach wesentlichen bestätigten Entscheidungen aktualisieren. Den Sicherungsbranch vom 23.10.2026 nicht ändern. Die Datei ist eine Arbeitszusammenfassung, kein vollständiger Export der Chatverläufe.
+
+## Dienstplan – verbindliche Farbkennzeichnung (bestätigt 14.11.2026)
+- In der kalendarischen Dienstplanliste normale Wochentage neutral darstellen.
+- Samstage und Sonntage jeweils dezent, aber klar voneinander unterscheidbar farblich hervorheben.
+- Gesetzliche Feiertage gesondert kennzeichnen und ihren ausgeschriebenen Namen am Datum anzeigen (z. B. Buß- und Bettag).
+- Feiertagsberechnung nach für den Dienstort geltendem Bundesland; keine pauschale bundesweite Feiertagsliste.
+- Diensttexte, Uhrzeiten, Orte, Navigation und alle anderen App-Funktionen unverändert lassen.
+- Diese Entscheidung dauerhaft beibehalten. Dokumentation allein ist noch keine technische Umsetzung; die produktive App muss separat implementiert und getestet werden.
