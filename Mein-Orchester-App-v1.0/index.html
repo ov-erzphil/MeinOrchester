@@ -326,14 +326,14 @@ if(free){strong.textContent='Frei';sm.style.display='none'}else{sm.style.display
 // Ergänze Kalendertage ohne Eintrag nur zwischen tatsächlich angezeigten Tagen.
 container.querySelectorAll('.mo-empty-date').forEach(node=>node.remove());
 const search=d.getElementById('query');
-if(search&&search.value.trim())return;
+const filtered=!!(search&&search.value.trim());
 const entries=[...container.querySelectorAll('button.event')].map(el=>{
  const m=el.querySelector('small')?.textContent.match(/(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/);
  if(!m)return null;
  const date=new Date(Number(m[3]),Number(m[2])-1,Number(m[1]),12);
  return Number.isNaN(date.getTime())?null:{el,date};
 }).filter(Boolean);
-for(let i=1;i<entries.length;i++){
+if(!filtered)for(let i=1;i<entries.length;i++){
  const prev=entries[i-1],next=entries[i];
  const days=Math.round((next.date-prev.date)/86400000);
  if(days<2||days>62)continue;
