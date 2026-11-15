@@ -318,7 +318,7 @@ const holiday=holidayName(dt);
 if(day===6)el.classList.add('mo-sat');if(day===0)el.classList.add('mo-sun');if(holiday)el.classList.add('mo-holiday');if(free)el.classList.add('mo-free');
 let label=el.querySelector('.mo-day-label');
 if(!label){label=d.createElement('span');label.className='mo-day-label';el.insertBefore(label,strong)}
-label.textContent=weekdays[day]+(holiday?' · '+holiday:'');
+label.textContent=weekdays[day]+' '+m[1]+'.'+String(month+1).padStart(2,'0')+'.'+m[3]+(holiday?' · '+holiday:'');
 if(free){strong.textContent='Frei';sm.style.display='none'}else{sm.style.display=''}
 }
 }
