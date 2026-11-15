@@ -291,4 +291,47 @@ document.getElementById('dayplan-retry').onclick=startDayplan;
  setInterval(checkEmergency,60000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkEmergency()});
 })();
-</script><script src="eilmeldungen.js?v=20261113"></script></body></html>
+</script><script src="eilmeldungen.js?v=20261113"></script><script id="mo-calendar-colors-v1">
+(function(){
+const app=document.getElementById('app');
+function apply(){
+let d;try{d=app.contentDocument}catch(e){return}if(!d||!d.getElementById('events'))return;
+if(!d.getElementById('mo-calendar-colors-style')){
+const style=d.createElement('style');style.id='mo-calendar-colors-style';
+style.textContent='.event.mo-day{background:#fff!important;border-radius:7px!important;box-sizing:border-box!important;white-space:normal!important;overflow-wrap:anywhere!important}.event.mo-sat{background:#E9F0F4!important}.event.mo-sun{background:#E3E9EF!important}.event.mo-holiday{background:#F1E8D8!important}.event.mo-free{background:#CDECCB!important;padding:3px 9px!important;min-height:24px!important;margin:3px 0!important;line-height:1.15!important}.event.mo-free strong{font-size:12px!important}.event.mo-free small{font-size:11px!important}.event .mo-day-label{font-size:11px;font-weight:600;margin-right:7px}.event.mo-free br{display:none}.event.mo-free small{margin-left:7px}.event.mo-day.sel{outline:2px solid #185b77!important}';
+d.head.append(style)}
+const container=d.getElementById('events');
+if(!container.__moColorObserver){let busy=false;const observer=new MutationObserver(()=>{if(busy)return;busy=true;try{paint()}finally{busy=false}});observer.observe(container,{childList:true,subtree:false});container.__moColorObserver=observer}
+paint();
+function paint(){
+const weekdays=['So','Mo','Di','Mi','Do','Fr','Sa'];
+for(const el of container.querySelectorAll('button.event')){
+const sm=el.querySelector('small'),strong=el.querySelector('strong');if(!sm||!strong)continue;
+const m=sm.textContent.match(/(\d{1,2})\.\s*([A-Za-zÄÖÜäöüß]+)\.?\s*(\d{4})/);
+if(!m)continue;
+const month=['januar','februar','märz','april','mai','juni','juli','august','september','oktober','november','dezember'].indexOf(m[2].toLowerCase());
+if(month<0)continue;
+const dt=new Date(Number(m[3]),month,Number(m[1]),12),day=dt.getDay();
+el.classList.add('mo-day');el.classList.remove('mo-sat','mo-sun','mo-holiday','mo-free');
+const title=strong.textContent.trim();const free=/^(frei|dienstfrei|freier tag)(\b|\s|$)/i.test(title);
+const holiday=holidayName(dt);
+if(day===6)el.classList.add('mo-sat');if(day===0)el.classList.add('mo-sun');if(holiday)el.classList.add('mo-holiday');if(free)el.classList.add('mo-free');
+let label=el.querySelector('.mo-day-label');
+if(!label){label=d.createElement('span');label.className='mo-day-label';el.insertBefore(label,strong)}
+label.textContent=weekdays[day]+(holiday?' · '+holiday:'');
+if(free){strong.textContent='Frei';sm.style.display='none'}else{sm.style.display=''}
+}
+}
+function holidayName(date){
+const y=date.getFullYear(),mm=date.getMonth()+1,dd=date.getDate(),key=mm+'-'+dd;
+const fixed={'1-1':'Neujahr','5-1':'Tag der Arbeit','10-3':'Tag der Deutschen Einheit','10-31':'Reformationstag','12-25':'1. Weihnachtstag','12-26':'2. Weihnachtstag'};
+if(fixed[key])return fixed[key];
+const a=y%19,b=Math.floor(y/100),c=y%100,h=(19*a+b-Math.floor(b/4)-Math.floor((b-Math.floor((b+8)/25)+1)/3)+15)%30,l=(32+2*(b%4)+2*Math.floor(c/4)-h-(c%4))%7,m=Math.floor((a+11*h+22*l)/451),easter=new Date(y,2,1,12);easter.setDate(1+Math.floor((h+l-7*m+114)/31)*0);const em=Math.floor((h+l-7*m+114)/31),ed=(h+l-7*m+114)%31+1;const e=new Date(y,em-1,ed,12);
+for(const [offset,name] of [[-2,'Karfreitag'],[1,'Ostermontag'],[39,'Christi Himmelfahrt'],[50,'Pfingstmontag']]){const z=new Date(e);z.setDate(z.getDate()+offset);if(z.getMonth()===date.getMonth()&&z.getDate()===dd)return name}
+const nov23=new Date(y,10,23,12),back=(nov23.getDay()+4)%7;nov23.setDate(23-back);if(mm===11&&dd===nov23.getDate())return 'Buß- und Bettag';
+return '';
+}
+}
+app.addEventListener('load',apply);setInterval(apply,1800);
+})();
+</script></body></html>
