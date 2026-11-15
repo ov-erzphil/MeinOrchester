@@ -304,6 +304,8 @@ const container=d.getElementById('events');
 if(!container.__moColorObserver){const observer=new MutationObserver(()=>{observer.disconnect();try{paint()}finally{observer.observe(container,{childList:true,subtree:false})}});container.__moColorObserver=observer}
 container.__moColorObserver.disconnect();try{paint()}finally{container.__moColorObserver.observe(container,{childList:true,subtree:false})}
 function paint(){
+for(const g of [...container.querySelectorAll(':scope > .mo-day-group')]){while(g.firstChild)container.insertBefore(g.firstChild,g);g.remove()}
+for(const e of container.querySelectorAll('button.event')){e.style.removeProperty('background');e.style.removeProperty('border-radius');e.style.removeProperty('margin');e.style.removeProperty('width');e.style.removeProperty('border-top');const l=e.querySelector('.mo-day-label');if(l){l.style.removeProperty('display');l.style.removeProperty('padding');l.style.removeProperty('font-weight')}}
 const weekdays=['So','Mo','Di','Mi','Do','Fr','Sa'];
 for(const el of container.querySelectorAll('button.event')){
 const sm=el.querySelector('small'),strong=el.querySelector('strong');if(!sm||!strong)continue;
@@ -345,6 +347,40 @@ for(let i=1;i<entries.length;i++){
   container.insertBefore(row,next.el);
  }
 }
+
+ // Dienste gleicher Tage in einer gemeinsamen Zelle gruppieren.
+ let previousKey='',group=null;
+ for(const el of [...container.querySelectorAll(':scope > button.event')]){
+  const sm=el.querySelector('small');
+  const m=sm?.textContent.match(/(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/);
+  if(!m){previousKey='';group=null;continue}
+  const key=m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
+  if(key!==previousKey){
+   previousKey=key;
+   group=d.createElement('div');
+   group.className='mo-day-group';
+   const category=['mo-free','mo-holiday','mo-sun','mo-sat'].find(c=>el.classList.contains(c));
+   const colors={'mo-free':'#CDECCB','mo-holiday':'#F1E8D8','mo-sun':'#E3E9EF','mo-sat':'#E9F0F4'};
+   group.style.cssText='background:'+(colors[category]||'#FCFAF5')+';border-radius:7px;margin:4px 0;overflow:hidden;';
+   container.insertBefore(group,el);
+  }
+  if(!group)continue;
+  const second=group.querySelector('button.event')!==null;
+  group.appendChild(el);
+  el.style.setProperty('background','transparent','important');
+  el.style.setProperty('border-radius','0','important');
+  el.style.setProperty('margin','0','important');
+  el.style.setProperty('width','100%','important');
+  const label=el.querySelector('.mo-day-label');
+  if(second){
+   if(label)label.style.display='none';
+   el.style.borderTop='1px solid rgba(50,60,60,.15)';
+  }else if(label){
+   label.style.display='block';
+   label.style.padding='2px 9px';
+   label.style.fontWeight='700';
+  }
+ }
 }
 function holidayName(date){
 const y=date.getFullYear(),mm=date.getMonth()+1,dd=date.getDate(),key=mm+'-'+dd;
