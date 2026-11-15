@@ -309,7 +309,7 @@ for(const el of container.querySelectorAll('button.event')){
 const sm=el.querySelector('small'),strong=el.querySelector('strong');if(!sm||!strong)continue;
 const m=sm.textContent.match(/(\d{1,2})\.\s*([A-Za-zÄÖÜäöüß]+)\.?\s*(\d{4})/);
 if(!m)continue;
-const month=['januar','februar','märz','april','mai','juni','juli','august','september','oktober','november','dezember'].indexOf(m[2].toLowerCase());
+const monthNames=['januar','februar','märz','april','mai','juni','juli','august','september','oktober','november','dezember'];const token=m[2].toLocaleLowerCase('de-DE').replace(/\.$/,'');const month=monthNames.findIndex(name=>name===token||name.slice(0,3)===token.slice(0,3));
 if(month<0)continue;
 const dt=new Date(Number(m[3]),month,Number(m[1]),12),day=dt.getDay();
 el.classList.add('mo-day');el.classList.remove('mo-sat','mo-sun','mo-holiday','mo-free');
