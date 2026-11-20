@@ -7,7 +7,7 @@
  function template(title,message,expiry){
   const now=new Date(),end=new Date(expiry);
   if(!title.trim()||title.length>180||message.length>5000||!Number.isFinite(end.getTime())||end<=now||end-now>7*86400000)throw Error('Bitte Überschrift und ein Ablaufdatum innerhalb der nächsten sieben Tage eingeben.');
-  const url=new URL('https://calendar.google.com/calendar/r/eventedit');
+  const url=new URL('https://calendar.google.com/calendar/render');
   url.searchParams.set('action','TEMPLATE');url.searchParams.set('authuser',account);
   url.searchParams.set('text','[EILMELDUNG] '+title.trim());url.searchParams.set('details',message.trim());
   url.searchParams.set('dates',utc(now)+'/'+utc(end));url.searchParams.set('ctz','Europe/Berlin');
@@ -28,8 +28,9 @@
    event.preventDefault();const status=panel.querySelector('#mo-alert-result');
    try{
     const url=template(panel.querySelector('#mo-alert-title').value,panel.querySelector('#mo-alert-message').value,panel.querySelector('#mo-alert-expiry').value);
-    const opened=window.open(url,'_blank','noopener,noreferrer');
-    status.replaceChildren();status.append(document.createTextNode('Bei Google das Konto und den Kalender kontrollieren und auf „Speichern“ klicken. '));
+    // On mobile, navigate in the same tab so Google reliably opens the prefilled event editor.
+    window.location.assign(url);
+    status.replaceChildren();status.append(document.createTextNode('Der vorausgefüllte Google-Termin wird geöffnet. Dort nur noch Kalender prüfen und auf „Speichern“ klicken. '));
     const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Vorbereitete Meldung bei Google öffnen';status.append(link);
    }catch(error){status.textContent=error.message;}
   };
