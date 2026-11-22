@@ -219,6 +219,9 @@ document.getElementById('app').addEventListener('load',function(){
  script.id='mo-navigation-test';script.src=new URL('navigation-test.js?v=1.0',window.location.href).href;
  script.onerror=()=>alert('Navigationstest konnte nicht geladen werden.');
  doc.body.append(script);
+ const planning=doc.createElement('script');
+ planning.src=new URL('dienstuebersicht.js',window.location.href).href;
+ doc.body.append(planning);
  }catch(err){alert('Test konnte nicht geladen werden: '+err.message)}
 });
 </script><script>
