@@ -47,6 +47,9 @@
     #mo-planning .mo-weekend:not(.mo-busy){background:#f2f5f6}
     #mo-planning [aria-current="date"]{outline:2px solid #185b77;outline-offset:-2px}
     #mo-planning [aria-pressed="true"]{box-shadow:inset 0 0 0 2px #185b77}
+    #mo-planning .mo-views .mo-planning-button{background:#e0f0f3;border-color:#39778a;color:#174755;font-weight:650}
+    #mo-planning .mo-views .mo-planning-button:hover{background:#cce5eb}
+    #mo-planning .mo-views .mo-planning-button[aria-pressed="true"]{background:#185b77;color:#fff;box-shadow:none}
     #mo-planning .mo-day-button small{display:block;font-size:.68rem}
     @media(max-width:450px){#mo-planning .mo-year{grid-template-columns:1fr}}
     #mo-planning details{margin-top:.75rem}
@@ -258,7 +261,9 @@
   }
 
   for (const view of ['Dienste', 'Monat', 'Jahr']) {
-    toggleViews.append(button(view, () => switchView(view)));
+    const control = button(view, () => switchView(view));
+    if (view !== 'Dienste') control.classList.add('mo-planning-button');
+    toggleViews.append(control);
   }
 
   function updateCalendar() {
