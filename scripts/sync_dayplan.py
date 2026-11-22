@@ -38,17 +38,20 @@ def inspect(url):
         data=fetch(url)
         if len(data)>15_000_000 or not data.startswith(b'%PDF-'): return None
         pdf=PdfReader(io.BytesIO(data))
-        dates=set()
-        for page in pdf.pages[:20]:
+        pages_by_date={}
+        for page_number, page in enumerate(pdf.pages[:20], start=1):
             text=page.extract_text() or ''
             for line in text.splitlines():
                 if not re.search(r'Tagesplan\s+f[uü]r',line,re.I): continue
                 for d,m,y in re.findall(r'(\d{1,2})\.\s*([A-Za-zäöüÄÖÜ]+)\s+(20\d{2})',line):
-                    if m.lower() in MONTHS: dates.add(date(int(y),MONTHS[m.lower()],int(d)).isoformat())
+                    if m.lower() in MONTHS:
+                        day=date(int(y),MONTHS[m.lower()],int(d)).isoformat()
+                        pages_by_date.setdefault(day,page_number)
                 for d,m,y in re.findall(r'(\d{1,2})\.(\d{1,2})\.(20\d{2})',line):
-                    dates.add(date(int(y),int(m),int(d)).isoformat())
-        if not dates: return None
-        return {'url':url,'dates':sorted(dates)}
+                    day=date(int(y),int(m),int(d)).isoformat()
+                    pages_by_date.setdefault(day,page_number)
+        if not pages_by_date: return None
+        return {'url':url,'dates':sorted(pages_by_date),'pagesByDate':pages_by_date}
     except Exception as error:
         print(f'Unavailable candidate {url}: {type(error).__name__}')
         return None

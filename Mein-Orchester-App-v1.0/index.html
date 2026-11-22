@@ -237,10 +237,11 @@ async function openDayplan(){
   if(url.origin!=='https://www.erzgebirgische.theater'||!url.pathname.startsWith('/user/')||!url.pathname.toLowerCase().endsWith('.pdf'))throw Error('Ungültiger Tagesplan');
   const checked=Date.parse(plan.checkedAt);
   if(!Number.isFinite(checked)||Date.now()-checked>24*60*60*1000)throw Error('Tagesplanprüfung muss aktualisiert werden');
-  url.searchParams.set('mo_refresh',Date.now());
-  link.href=url.href;link.hidden=false;
   const today=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Berlin'}).format(new Date());
   const dates=Array.isArray(plan.dates)?plan.dates:[];
+  const page=plan.pagesByDate?.[today];
+  if(Number.isInteger(page)&&page>0)url.hash='page='+page;
+  link.href=url.href;link.hidden=false;
   status.textContent=dates.includes(today)?'Der aktuelle Tagesplan ist bereit.':'Der zuletzt verfügbare Tagesplan ist bereit.';
   // A same-origin helper tab avoids popup blocking after the asynchronous lookup.
   const target=window.moDayplanWindow;
