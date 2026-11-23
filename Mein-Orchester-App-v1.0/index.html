@@ -245,6 +245,32 @@ async function openDayplan(){
   const page=plan.pagesByDate?.[today];
   if(Number.isInteger(page)&&page>0)url.hash='page='+page;
   link.href=url.href;link.hidden=false;
+  // The theater may replace a PDF between the scheduled check and opening it.
+  // Keep the verified alternatives accessible without guessing which slot is current.
+  let alternatives=document.getElementById('dayplan-alternatives');
+  if(!alternatives){
+   alternatives=document.createElement('div');
+   alternatives.id='dayplan-alternatives';
+   link.insertAdjacentElement('afterend',alternatives);
+  }
+  alternatives.replaceChildren();
+  const verified=Array.isArray(plan.candidates)?plan.candidates:[];
+  if(verified.length>1){
+   const heading=document.createElement('p');
+   heading.textContent='Falls die PDF inzwischen verschoben wurde, geprüfte Alternativen:';
+   alternatives.append(heading);
+   for(const item of verified){
+    try{
+     const other=new URL(item.url);
+     if(other.origin!==url.origin||!/^\\/user\\/aktuell[1-9]\\.pdf$/i.test(other.pathname)||other.href===new URL(plan.url).href)continue;
+     const a=document.createElement('a');
+     a.href=other.href;a.target='_blank';a.rel='noopener noreferrer';
+     a.textContent=other.pathname.split('/').pop();
+     a.style.cssText='display:inline-block;margin:4px;padding:9px;border:1px solid #bdcbd5;border-radius:6px';
+     alternatives.append(a);
+    }catch(e){}
+   }
+  }
   status.textContent=dates.includes(today)?'Der aktuelle Tagesplan ist bereit.':'Der zuletzt verfügbare Tagesplan ist bereit.';
   // A same-origin helper tab avoids popup blocking after the asynchronous lookup.
   const target=window.moDayplanWindow;
