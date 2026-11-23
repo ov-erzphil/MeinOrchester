@@ -74,6 +74,9 @@ def main():
     chosen=select(found,today)
     output={'available':bool(chosen),'checkedAt':datetime.now(timezone.utc).isoformat()}
     if chosen: output.update(chosen)
+    # Publish all verified alternatives for a manual fallback if the theater moves a file
+    # between synchronization and the user's click.
+    output['candidates'] = found
     Path('tagesplan-aktuell.json').write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
     print(f'Verified {len(found)} day-plan PDFs; selected {chosen}')
 
