@@ -1,17 +1,26 @@
 {
   "available": true,
-  "checkedAt": "2026-11-23T10:38:35.038392+00:00",
-  "url": "https://www.erzgebirgische.theater/user/aktuell1.pdf",
+  "checkedAt": "2026-11-23T16:04:10.650572+00:00",
+  "url": "https://www.erzgebirgische.theater/user/aktuell2.pdf",
   "dates": [
-    "2026-11-20",
-    "2026-11-21",
-    "2026-11-22",
-    "2026-11-23"
+    "2026-11-23",
+    "2026-11-24"
   ],
   "pagesByDate": {
-    "2026-11-20": 1,
-    "2026-11-21": 2,
-    "2026-11-22": 3,
-    "2026-11-23": 3
-  }
+    "2026-11-23": 1,
+    "2026-11-24": 2
+  },
+  "candidates": [
+    {
+      "url": "https://www.erzgebirgische.theater/user/aktuell2.pdf",
+      "dates": [
+        "2026-11-23",
+        "2026-11-24"
+      ],
+      "pagesByDate": {
+        "2026-11-23": 1,
+        "2026-11-24": 2
+      }
+    }
+  ]
 }
