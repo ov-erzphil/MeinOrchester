@@ -271,7 +271,7 @@ async function openDayplan(){
    for(const item of verified){
     try{
      const other=new URL(item.url);
-     if(other.origin!==url.origin||!/^\\/user\\/aktuell[1-9]\\.pdf$/i.test(other.pathname)||other.href===new URL(plan.url).href)continue;
+     if(other.origin!==url.origin||!new RegExp('^/user/aktuell[1-9][.]pdf$','i').test(other.pathname)||other.href===new URL(plan.url).href)continue;
      const a=document.createElement('a');
      a.href=other.href;a.target='_blank';a.rel='noopener noreferrer';
      a.textContent=other.pathname.split('/').pop();
